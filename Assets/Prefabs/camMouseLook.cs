@@ -26,6 +26,9 @@ public class camMouseLook : MonoBehaviour {
 		smoothV.y = Mathf.Lerp (smoothV.y, md.y, 1 / smoothing);
 		mouseLook += smoothV;
 
+		//Sicht beschränken
+		mouseLook.y=Mathf.Clamp(mouseLook.y,-90f,120f);
+
 		transform.localRotation = Quaternion.AngleAxis (-mouseLook.y, Vector3.right);
 		character.transform.localRotation = Quaternion.AngleAxis (mouseLook.x, character.transform.up);
 
