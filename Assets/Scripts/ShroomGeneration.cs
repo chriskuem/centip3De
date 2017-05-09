@@ -23,7 +23,7 @@ public class ShroomGeneration : MonoBehaviour {
 	}
 
 	private IEnumerator generateShrooms(float waitTime){
-		for (int y = 0; y < dimensons.y; y++) {
+		for (float y = dimensons.y; y > 0; y--) {
         	for (int x = 0; x < dimensons.x; x++) {
 				for(int z = 0; z < dimensons.z; z++){    
 					if((Random.value*100) <= spawnPercentage) {
