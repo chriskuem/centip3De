@@ -28,7 +28,7 @@ public class ShroomGeneration : MonoBehaviour {
 				for(int z = 0; z < dimensons.z; z++){    
 					if((Random.value*100) <= spawnPercentage) {
 						yield return new WaitForSeconds(waitTime); 
-						Instantiate(mushroom, new Vector3(x,y,z), Quaternion.identity);	
+						Instantiate(mushroom, new Vector3(x,y,z), Quaternion.Euler(270, 0, 0));	
 					}
 				}
         	}
