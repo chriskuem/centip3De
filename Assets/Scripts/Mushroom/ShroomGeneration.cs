@@ -9,26 +9,28 @@ public class ShroomGeneration : MonoBehaviour {
 	// value between 1-100
 	public int spawnPercentage;
 	// dimensons of the Spawn Matrix
-	public Vector3 dimensons;
+	public Vector3 matrixDimensons;
+	// offset for Matrix Startingposition
+	public Vector3 matrixOffset;
 	// spawntime for Shrooms
-	public float waitTime;
+	public float spawnTime;
 
 	// Use this for initialization
 	void Start () {
-		StartCoroutine(generateShrooms(waitTime));
+		StartCoroutine(generateShrooms(spawnTime));
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	}
 
-	private IEnumerator generateShrooms(float waitTime){
-		for (float y = dimensons.y; y > 0; y--) {
-        	for (int x = 0; x < dimensons.x; x++) {
-				for(int z = 0; z < dimensons.z; z++){    
+	private IEnumerator generateShrooms(float spawnTime){
+		for (float y = matrixDimensons.y; y > 0; y--) {
+        	for (int x = 0; x < matrixDimensons.x; x++) {
+				for(int z = 0; z < matrixDimensons.z; z++){    
 					if((Random.value*100) <= spawnPercentage) {
-						yield return new WaitForSeconds(waitTime); 
-						Instantiate(mushroom, new Vector3(x,y,z), Quaternion.Euler(270, 0, 0));	
+						yield return new WaitForSeconds(spawnTime); 
+						Instantiate(mushroom, (new Vector3(x,y,z) + matrixOffset), Quaternion.Euler(270, 0, 0));	
 					}
 				}
         	}
