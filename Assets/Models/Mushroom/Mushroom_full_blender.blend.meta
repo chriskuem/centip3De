@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 03aa739d8780af84db5940bb118a0681
-timeCreated: 1494406526
+guid: 736d16cf3f905a44e8e83ddd3e84a5dc
+timeCreated: 1494597166
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,8 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Cube
-    4300002: Mushroom
+    4300000: Mushroom
     7400000: Default Take
     9500000: //RootNode
   materials:
