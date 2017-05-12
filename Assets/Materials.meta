@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: c36adc593066def44a1ceae21956e728
 folderAsset: yes
 timeCreated: 1494407777
+=======
+guid: d690e7fcbb92762448e08481b57ef6b2
+folderAsset: yes
+timeCreated: 1493888925
+>>>>>>> od_playerMovement
 licenseType: Free
 DefaultImporter:
   userData: 
