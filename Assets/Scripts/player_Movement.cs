@@ -24,8 +24,8 @@ public class player_Movement : MonoBehaviour {
 	void Update () {
 
 		//movement-------------------------
-		float translation = Input.GetAxis ("Vertical") * speed;
-		float straffe = Input.GetAxis ("Horizontal") * speed;
+		float translation = 0f;//Input.GetAxis ("Vertical") * speed;
+		float straffe = Input.GetAxis ("Horizontal") * (speed/100);
 		translation *= Time.deltaTime;
 		straffe *= Time.deltaTime;
 
@@ -42,16 +42,16 @@ public class player_Movement : MonoBehaviour {
 		mouseLook += smoothV;
 
 		//Sicht beschränken
-		mouseLook.y=Mathf.Clamp(mouseLook.y,-90f,120f);
+		mouseLook.y=Mathf.Clamp(mouseLook.y,-40f,120f);
 
 		cam.transform.localRotation = Quaternion.AngleAxis (-mouseLook.y, Vector3.right);
 		transform.localRotation = Quaternion.AngleAxis (mouseLook.x, transform.up);
 		//------------------------
 
 		//jump----------------
-		if (Input.GetButtonDown ("Jump")){
-			this.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpheight * Time.deltaTime, 0);
-			        } 
+		//if (Input.GetButtonDown ("Jump")){
+		//	this.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpheight * Time.deltaTime, 0);
+		//	        } 
 		//----------------------
 
 		//unlock mouse
