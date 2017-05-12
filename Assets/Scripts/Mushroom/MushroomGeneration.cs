@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShroomGeneration : MonoBehaviour {
+public class MushroomGeneration : MonoBehaviour {
 
 	// insert Mushroom Asset
 	public Transform mushroom;
@@ -30,7 +30,7 @@ public class ShroomGeneration : MonoBehaviour {
 				for(int z = 0; z < matrixDimensons.z; z++){    
 					if((Random.value*100) <= spawnPercentage) {
 						yield return new WaitForSeconds(spawnTime); 
-						Instantiate(mushroom, (new Vector3(x,y,z) + matrixOffset), Quaternion.Euler(270, 0, 0));	
+						Instantiate(mushroom, (new Vector3(x,y,z) + matrixOffset), Quaternion.identity);	
 					}
 				}
         	}
