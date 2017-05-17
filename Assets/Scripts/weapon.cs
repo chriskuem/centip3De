@@ -5,15 +5,17 @@ using UnityEngine;
 public class weapon : MonoBehaviour {
 
 	public GameObject bulletPrefab;
+	public float bulletspeed=6f;
+	int playerNr;
 
 	// Use this for initialization
 	void Start () {
-		
+		playerNr=this.transform.parent.transform.parent.transform.GetSiblingIndex()+1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown("Fire1"))
+		if (Input.GetButtonDown("Fire"+playerNr))
 		{
 			Fire();
 		}
@@ -22,7 +24,7 @@ public class weapon : MonoBehaviour {
 	void Fire()
 	{
 		//spawn at BulletSpawn location with direction of BulletSpawn(camera)
-		Transform bulletSpawn =this.transform.parent.transform.GetChild(1).transform;
+		Transform bulletSpawn =this.transform.parent.transform.Find("BulletSpawn").gameObject.transform;
 
 		// Create the Bullet from the Bullet Prefab
 		var bullet = (GameObject)Instantiate(
@@ -31,9 +33,10 @@ public class weapon : MonoBehaviour {
 			bulletSpawn.rotation);
 
 		// Add velocity to the bullet
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6;
+		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletspeed;
+		//bullet.transform.parent=gameObject.transform;
 
-		// Destroy the bullet after 2 seconds
+		// Destroy the bullet after 20 seconds
 		Destroy(bullet, 20.0f);        
 	}
 }

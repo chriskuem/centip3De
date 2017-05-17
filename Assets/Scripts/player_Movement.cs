@@ -7,6 +7,7 @@ public class player_Movement : MonoBehaviour {
 	//Movement
 	public float speed=1;
 	public float jumpheight=75;
+	int playerNr;
 
 	//Mouse look around
 	Vector2 mouseLook;
@@ -14,8 +15,13 @@ public class player_Movement : MonoBehaviour {
 	public float sensitivity=5;
 	public float smoothing=2;
 
+	//name of container with moving parts
+	public string NameOfMovingPartsContainer="MovingParts";
+
 	// Use this for initialization
 	void Start () {
+		playerNr=transform.GetSiblingIndex()+1;
+
 		//Lock Mouse in Window
 		Cursor.lockState = CursorLockMode.Locked;
 	}
@@ -24,8 +30,10 @@ public class player_Movement : MonoBehaviour {
 	void Update () {
 
 		//movement-------------------------
-		float translation = 0f;//Input.GetAxis ("Vertical") * speed;
-		float straffe = Input.GetAxis ("Horizontal") * (speed/100);
+		if(Input.GetKeyDown(KeyCode.LeftShift))speed=speed*3;
+		if(Input.GetKeyUp(KeyCode.LeftShift))speed=speed/3;
+		float translation = Input.GetAxis ("Vertical"+playerNr) * speed;
+		float straffe = Input.GetAxis ("Horizontal"+playerNr) * speed;
 		translation *= Time.deltaTime;
 		straffe *= Time.deltaTime;
 
@@ -33,8 +41,8 @@ public class player_Movement : MonoBehaviour {
 		//---------------------------------
 
 		//look around----------
-		var cam = transform.GetChild(0);
-		var md = new Vector2 (Input.GetAxisRaw ("Mouse X"), Input.GetAxisRaw ("Mouse Y"));
+		var cam = transform.Find(NameOfMovingPartsContainer).gameObject;
+		var md = new Vector2 (Input.GetAxisRaw ("Mouse X"+playerNr), Input.GetAxisRaw ("Mouse Y"+playerNr));
 
 		md = Vector2.Scale (md, new Vector2 (sensitivity * smoothing, sensitivity * smoothing));
 		smoothV.x = Mathf.Lerp (smoothV.x, md.x, 1 / smoothing);
@@ -42,16 +50,16 @@ public class player_Movement : MonoBehaviour {
 		mouseLook += smoothV;
 
 		//Sicht beschränken
-		mouseLook.y=Mathf.Clamp(mouseLook.y,-40f,120f);
+		mouseLook.y=Mathf.Clamp(mouseLook.y,-80f,120f);
 
 		cam.transform.localRotation = Quaternion.AngleAxis (-mouseLook.y, Vector3.right);
 		transform.localRotation = Quaternion.AngleAxis (mouseLook.x, transform.up);
 		//------------------------
 
 		//jump----------------
-		//if (Input.GetButtonDown ("Jump")){
-		//	this.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpheight * Time.deltaTime, 0);
-		//	        } 
+		if (Input.GetButtonDown ("Jump"+playerNr)&&transform.position.y<1){
+			this.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpheight * Time.deltaTime, 0);
+			        } 
 		//----------------------
 
 		//unlock mouse
