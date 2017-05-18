@@ -18,12 +18,27 @@ public class player_Movement : MonoBehaviour {
 	//name of container with moving parts
 	public string NameOfMovingPartsContainer="MovingParts";
 
+	//camera zoom
+	bool zoom = false;
+
+	//Fadenkreuz
+	//public Texture2D Fadenkreuz;
+	//Rect Fposition;
+	//bool FadenkreuzAn;
+
 	// Use this for initialization
 	void Start () {
 		playerNr=transform.GetSiblingIndex()+1;
 
 		//Lock Mouse in Window
 		Cursor.lockState = CursorLockMode.Locked;
+
+		//Crosshair
+		//Fposition = new Rect((Screen.width - Fadenkreuz.width) / 2, (Screen.height - Fadenkreuz.height) /2, Fadenkreuz.width, Fadenkreuz.height);
+		//if(FadenkreuzAn == true)
+		//{
+		//	GUI.DrawTexture(Fposition, Fadenkreuz);
+		//}
 	}
 	
 	// Update is called once per frame
@@ -50,11 +65,27 @@ public class player_Movement : MonoBehaviour {
 		mouseLook += smoothV;
 
 		//Sicht beschränken
-		mouseLook.y=Mathf.Clamp(mouseLook.y,-80f,120f);
+		mouseLook.y=Mathf.Clamp(mouseLook.y,-20f,120f);
 
 		cam.transform.localRotation = Quaternion.AngleAxis (-mouseLook.y, Vector3.right);
 		transform.localRotation = Quaternion.AngleAxis (mouseLook.x, transform.up);
 		//------------------------
+
+
+		//zoom---------------------------------
+		Camera FPScam=cam.transform.Find("FPSCamera").gameObject.transform.GetComponent<Camera> ();
+		if (Input.GetButtonDown ("Zoom" + playerNr)) {
+			zoom = !zoom;
+		} 
+		if(zoom){
+			FPScam.fieldOfView = Mathf.Lerp(FPScam.fieldOfView,20f,Time.deltaTime*5f);
+		}
+		else{
+			FPScam.fieldOfView = Mathf.Lerp(FPScam.fieldOfView,60f,Time.deltaTime*5f);
+		}
+		//-----------------------------------
+
+
 
 		//jump----------------
 		if (Input.GetButtonDown ("Jump"+playerNr)&&transform.position.y<1){
@@ -67,4 +98,6 @@ public class player_Movement : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 
 	}
+
+
 }
