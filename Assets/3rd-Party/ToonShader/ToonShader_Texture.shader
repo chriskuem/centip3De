@@ -2,7 +2,7 @@
 //https://pastebin.com/qAZXPEtY
 //https://www.youtube.com/watch?v=3qBDTh9zWrQ
 
-Shader "3rd-Party/ToonShader" {
+Shader "3rd-Party/ToonShader_Texture" {
    Properties {
     _Color ("Diffuse Material Color", Color) = (1,1,1,1)
     _UnlitColor ("Unlit Color", Color) = (0.5,0.5,0.5,1)
@@ -111,7 +111,7 @@ Shader "3rd-Party/ToonShader" {
        
     float3 combinedLight = (ambientLight + diffuseReflection) * outlineStrength + specularReflection;
            
-    return float4(combinedLight, 1.0); //+ tex2D(_MainTex, input.uv); // DELETE LINE COMMENTS & ';' TO ENABLE TEXTURE
+    return float4(combinedLight, 1.0) + tex2D(_MainTex, input.uv); // DELETE LINE COMMENTS & ';' TO ENABLE TEXTURE
        
  
         }
