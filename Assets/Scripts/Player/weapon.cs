@@ -34,7 +34,7 @@ public class weapon : MonoBehaviour {
 
 		// Add velocity to the bullet
 		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletspeed;
-		//bullet.transform.parent=gameObject.transform;
+		//bullet.transform.parent=this.transform.root.transform.Find("_Temp").gameObject.transform;
 
 		// Destroy the bullet after 20 seconds
 		Destroy(bullet, 20.0f);        

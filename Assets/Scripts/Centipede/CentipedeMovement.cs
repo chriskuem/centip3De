@@ -11,14 +11,17 @@ public class CentipedeMovement : MonoBehaviour {
 	int direction=0;
 	int directionBefore=0;
 
+	public Mesh head;
+	public Mesh body;
+
 	// Use this for initialization
 	void Start () {
-		partNr=transform.GetSiblingIndex();
 		currentHeight = transform.position.y;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		partNr=transform.GetSiblingIndex();
 
 		//head
 		if (partNr == 0) {
@@ -66,6 +69,26 @@ public class CentipedeMovement : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-		currentHeight--;
+		//ignore collisions within centipede
+		if (collision.collider.transform.parent.gameObject != transform.parent.gameObject) {
+
+
+
+
+				//move down on collision with wall/mushroom
+				if (currentHeight > 3) {
+					currentHeight--;
+				}
+
+			//head
+			if (partNr == 0) {
+
+			} else {
+				//loose part on bullet enter and split centipede
+				//if (collision.collider.gameObject.name == "Bullet") {
+				Object.Destroy(this.gameObject);
+				//}
+			}
+		}
 	}
 }
