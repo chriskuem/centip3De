@@ -26,7 +26,14 @@ public class CentipedeSpawner : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-
+	void FixedUpdate () {
+		//delete empty centipedes if more than 3 childs
+		if (transform.childCount > 3) {
+			foreach (Transform child in transform) {
+				if (child.childCount == 0) {
+					GameObject.Destroy (child.gameObject);
+				}
+			}
+		}
 	}
 }

@@ -5,23 +5,46 @@ using UnityEngine;
 public class CentipedeMovement : MonoBehaviour {
 
 	int partNr;
-	public float currentHeight = 50;
-	public Vector3 target;
+	float currentHeight;
+	Vector3 target=new Vector3(0f,0f,0f);
+
 	public float speed = 1f;
+	public float playfieldSize=50f;
+
 	int direction=0;
 	int directionBefore=0;
 
 	public Mesh head;
 	public Mesh body;
 
+
 	// Use this for initialization
 	void Start () {
+		playfieldSize = playfieldSize / 2;
 		currentHeight = transform.position.y;
+		partNr=999;
+	}
+
+	void IndexChanged(int newIndex){
+		//change mesh for head
+		if (newIndex == 0) {
+			GetComponent<MeshFilter> ().mesh = head;
+		} else {
+			GetComponent<MeshFilter> ().mesh = body;
+
+			//ignore collisions within centipede
+			Physics.IgnoreCollision(transform.parent.transform.GetChild(partNr-1).gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+		}
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		partNr=transform.GetSiblingIndex();
+
+		//index of part in centipede
+		if(partNr!=transform.GetSiblingIndex()){
+			partNr=transform.GetSiblingIndex();
+			IndexChanged (partNr);
+		}
 
 		//head
 		if (partNr == 0) {
@@ -32,20 +55,55 @@ public class CentipedeMovement : MonoBehaviour {
 			} else if(direction==0) {
 				//4 random directions
 				System.Random random = new System.Random();
-				while (direction==directionBefore)direction = random.Next(1, 5);
-				if(direction==1)target = new Vector3 (100, transform.position.y, transform.position.z);
-				if(direction==2)target = new Vector3 (-100, transform.position.y, transform.position.z);
-				if(direction==3)target = new Vector3 (transform.position.z, transform.position.y, 100);
-				if(direction==4)target = new Vector3 (transform.position.z, transform.position.y, -100);
-				directionBefore = direction;
+				bool errorDir = true;
+
+				//check if direction is possible/direction leads into playfield
+				while (errorDir) {
+					direction = random.Next (1, 5);
+					if (direction == 1&&transform.position.x<playfieldSize)
+						errorDir = false;
+					if (direction == 2&&transform.position.x>-playfieldSize)
+						errorDir = false;
+					if (direction == 3&&transform.position.z<playfieldSize)
+						errorDir = false;
+					if (direction == 4&&transform.position.z>-playfieldSize)
+						errorDir = false;
+				}
+				if (direction == 1)
+					target = new Vector3 (playfieldSize, transform.position.y, transform.position.z);
+				if (direction == 2)
+					target = new Vector3 (-playfieldSize, transform.position.y, transform.position.z);
+				if (direction == 3)
+					target = new Vector3 (transform.position.x, transform.position.y, playfieldSize);
+				if (direction == 4)
+					target = new Vector3 (transform.position.x, transform.position.y, -playfieldSize);
 			}
 
-			//dir to target
-			var dir = target-transform.position;
+			//detect wall "collosion"
+			bool wall1=transform.position.x > playfieldSize;
+			bool wall2 = transform.position.x < -playfieldSize;
+			bool wall3 = transform.position.z > playfieldSize;
+			bool wall4 = transform.position.z < -playfieldSize;
+			if (wall1 || wall2 || wall3 || wall4) {
+				MoveDown();
+				if (wall1)
+					target=new Vector3 (playfieldSize-1,transform.position.y,transform.position.z);
+				if (wall2)
+					target=new Vector3 (-playfieldSize+1,transform.position.y,transform.position.z);
+				if (wall3)
+					target=new Vector3 (transform.position.x,transform.position.y,playfieldSize-1);
+				if (wall4)
+					target=new Vector3 (transform.position.x,transform.position.y,-playfieldSize+1);
 
-			//Rotate towards part ahead and move
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime*speed);
-			transform.position += transform.forward * Time.deltaTime*speed;
+			} 
+
+
+				//dir to target
+				var dir = target - transform.position;
+
+				//Rotate towards part ahead and move
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (dir), Time.deltaTime * speed);
+				transform.position += transform.forward * Time.deltaTime * speed;
 
 		}
 
@@ -69,25 +127,46 @@ public class CentipedeMovement : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-		//ignore collisions within centipede
-		if (collision.collider.transform.parent.gameObject != transform.parent.gameObject) {
+		//disable self collision
+		if (collision.collider.gameObject.transform.parent != transform.parent) {
 
+			//move down on collision with mushroom
+			MoveDown();
 
+			//bullet hit
+			if (collision.collider.name=="Bullet") {
+				//normal body parts
+				if (partNr != 0) {
+					//if not last
+					if (transform.GetSiblingIndex () + 1 != transform.parent.childCount) {
+						//create new centipede container
+						GameObject centipede = new GameObject ();
+						centipede.name = "Centipede-" + partNr;
+						centipede.transform.parent = transform.parent.transform.parent.transform;
 
+						//put parts into new centipede
+						int timesIt = transform.parent.childCount;
+						for (int i = partNr + 1; i < timesIt; i++) {
+							//immer part+1 da sich index des Childs durch verschieben des vorherigen ändert
+							transform.parent.transform.GetChild (partNr + 1).gameObject.transform.parent = centipede.transform;
+						}
+					}
 
-				//move down on collision with wall/mushroom
-				if (currentHeight > 3) {
-					currentHeight--;
+					//loose part on bullet enter
+					Object.Destroy (this.gameObject);
+				} 
+				//head
+				else {
+					Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount- 1).gameObject);
 				}
+			}
+		}
+	}
 
-			//head
-			if (partNr == 0) {
-
-			} else {
-				//loose part on bullet enter and split centipede
-				//if (collision.collider.gameObject.name == "Bullet") {
-				Object.Destroy(this.gameObject);
-				//}
+	void MoveDown(){
+		if (currentHeight > 3) {
+			if (transform.position.y <= currentHeight) {
+				currentHeight--;
 			}
 		}
 	}

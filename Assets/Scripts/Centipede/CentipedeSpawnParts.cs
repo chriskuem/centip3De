@@ -20,6 +20,7 @@ public class CentipedeSpawnParts : MonoBehaviour {
 				transform.rotation);
 
 			centipedePart.transform.parent=gameObject.transform;
+			centipedePart.name = "Part" + i;
 
 		}
 	}
