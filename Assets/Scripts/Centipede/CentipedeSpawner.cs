@@ -17,7 +17,7 @@ public class CentipedeSpawner : MonoBehaviour {
 			// Create the centipedes from the centipede Prefab
 			var centipede = (GameObject)Instantiate(
 				CentipedePrefab,
-				new Vector3(0f+(i*2f),playfieldHeight,0f),
+				new Vector3(0f,playfieldHeight,0f+(i*2f)),
 				transform.rotation);
 
 			centipede.transform.parent=gameObject.transform;

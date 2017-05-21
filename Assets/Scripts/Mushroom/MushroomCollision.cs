@@ -22,21 +22,23 @@ public class MushroomCollision : MonoBehaviour {
 	
 	// Update is called once per frame
 	void OnCollisionEnter (Collision col) {
-		if (hitCount == 0){
-			Destroy(gameObject.transform.GetChild(0).transform.gameObject, 0.1f);
-			trans = Instantiate(mushroomMiddle, initVec, Quaternion.Euler(270, 0, 0));
-			trans.transform.parent = gameObject.transform;
+		if (col.collider.name == "Bullet") {
+			if (hitCount == 0) {
+				Destroy (gameObject.transform.GetChild (0).transform.gameObject, 0.1f);
+				trans = Instantiate (mushroomMiddle, initVec, Quaternion.Euler (270, 0, 0));
+				trans.transform.parent = gameObject.transform;
+			}
+			if (hitCount == 1) {
+				Destroy (gameObject.transform.GetChild (0).transform.gameObject, 0.3f);
+				trans = Instantiate (mushroomLow, initVec, Quaternion.Euler (270, 0, 0));
+				trans.transform.parent = gameObject.transform;
+			}
+			if (hitCount == 2) {
+				trans = Instantiate (leftovers, initVec, Quaternion.identity);
+				Destroy (trans.gameObject, 100f);
+				Destroy (gameObject);
+			}
+			hitCount++;
 		}
-		if (hitCount == 1){
-			Destroy(gameObject.transform.GetChild(0).transform.gameObject, 0.3f);
-			trans = Instantiate(mushroomLow, initVec, Quaternion.Euler(270, 0, 0));
-			trans.transform.parent = gameObject.transform;
-		}
-		if (hitCount == 2){
-			trans = Instantiate(leftovers, initVec, Quaternion.identity);
-			Destroy(trans.gameObject, 10f);
-			Destroy(gameObject);
-		}
-		hitCount++;
 	}
 }

@@ -14,8 +14,8 @@ public class CentipedeMovement : MonoBehaviour {
 	int direction=0;
 	int directionBefore=0;
 
-	public Mesh head;
-	public Mesh body;
+	public Transform head;
+	public Transform body;
 
 
 	// Use this for initialization
@@ -23,15 +23,25 @@ public class CentipedeMovement : MonoBehaviour {
 		playfieldSize = playfieldSize / 2;
 		currentHeight = transform.position.y;
 		partNr=999;
+
+
+		var bodyObject=Instantiate(body,transform.position,(transform.rotation * body.transform.localRotation));
+		bodyObject.transform.parent=gameObject.transform;
 	}
 
 	void IndexChanged(int newIndex){
+		
 		//change mesh for head
 		if (newIndex == 0) {
-			GetComponent<MeshFilter> ().mesh = head;
-		} else {
-			GetComponent<MeshFilter> ().mesh = body;
+			var headObject=Instantiate(head,transform.position,(transform.rotation * head.transform.localRotation));
+			headObject.transform.parent=gameObject.transform;
 
+			//remove old prefab
+			if (transform.childCount > 0) {
+				Object.Destroy (transform.GetChild(0).gameObject);
+			}
+
+		} else {
 			//ignore collisions within centipede
 			Physics.IgnoreCollision(transform.parent.transform.GetChild(partNr-1).gameObject.GetComponent<Collider>(), GetComponent<Collider>());
 		}
@@ -116,11 +126,11 @@ public class CentipedeMovement : MonoBehaviour {
 			var dir = ahead.transform.position - transform.position;
 
 			//if distance to high
-			if(dir.magnitude > 1.0f)
+			if(dir.magnitude >= 0.8f)
 			{
 				//Rotate towards part ahead and move
-				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), dir.magnitude * Time.deltaTime*speed);
-				transform.position += transform.forward * dir.magnitude * Time.deltaTime*speed;
+				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), dir.magnitude * Time.deltaTime*speed*1.5f);
+				transform.position += transform.forward * dir.magnitude * Time.deltaTime*speed*1.5f;
 			}
 		}
 	}

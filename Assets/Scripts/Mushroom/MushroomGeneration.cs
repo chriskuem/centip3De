@@ -29,11 +29,11 @@ public class MushroomGeneration : MonoBehaviour {
         	for (int x = 0; x < matrixDimensons.x; x++) {
 				for(int z = 0; z < matrixDimensons.z; z++){    
 					if((Random.value*100) <= spawnPercentage) {
-						yield return new WaitForSeconds(spawnTime); 
 						Instantiate(mushroom, (new Vector3(x,y,z) + matrixOffset), Quaternion.identity);	
 					}
 				}
         	}
+			yield return new WaitForSeconds(spawnTime); 
     	}
 	}
 }
