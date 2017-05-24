@@ -20,6 +20,7 @@ public class CentipedeMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		speed = speed + Gameplay.lvl-1;
 		playfieldSize = playfieldSize / 2;
 		partNr=999;
 
@@ -140,11 +141,8 @@ public class CentipedeMovement : MonoBehaviour {
 		//disable self collision
 		if (collision.collider.gameObject.transform.parent != transform.parent) {
 
-			//move down on collision with mushroom
-			MoveDown();
-
 			//bullet hit
-			if (collision.collider.name=="Bullet") {
+			if (collision.collider.name == "Bullet") {
 				//normal body parts
 				if (partNr != 0) {
 					//if not last
@@ -167,17 +165,22 @@ public class CentipedeMovement : MonoBehaviour {
 				} 
 				//head
 				else {
-					Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount- 1).gameObject);
+					Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject);
 				}
+			} else {
+				//move down on collision with mushroom
+				MoveDown();
 			}
 		}
 	}
 
 	void MoveDown(){
-		if (currentHeight > 0) {
+		if (currentHeight > 2) {
 			if (transform.position.y <= currentHeight) {
 				currentHeight--;
 			}
+		} else {
+			Gameplay.GameOver = true;
 		}
 	}
 }

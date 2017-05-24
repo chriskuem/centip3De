@@ -45,8 +45,8 @@ public class player_Movement : MonoBehaviour {
 	void Update () {
 
 		//movement-------------------------
-		if(Input.GetKeyDown(KeyCode.LeftShift))speed=speed*3;
-		if(Input.GetKeyUp(KeyCode.LeftShift))speed=speed/3;
+		if(Input.GetButtonDown("Sprint"+playerNr))speed=speed*3;
+		if(Input.GetButtonUp("Sprint"+playerNr))speed=speed/3;
 		float translation = Input.GetAxis ("Vertical"+playerNr) * speed;
 		float straffe = Input.GetAxis ("Horizontal"+playerNr) * speed;
 		translation *= Time.deltaTime;
@@ -97,7 +97,13 @@ public class player_Movement : MonoBehaviour {
 		if (Input.GetKeyDown ("escape"))
 			Cursor.lockState = CursorLockMode.None;
 
+
+		//loose
+		if (Gameplay.GameOver) {
+			Object.Destroy (this.gameObject);
+		}
 	}
+
 
 
 }

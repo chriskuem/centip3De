@@ -7,6 +7,9 @@ public class weapon : MonoBehaviour {
 	public GameObject bulletPrefab;
 	public float bulletspeed=6f;
 	int playerNr;
+	bool keepFiring=false;
+	float reloadTime=0.100f;
+	float lastShot=0f;
 
 	// Use this for initialization
 	void Start () {
@@ -14,29 +17,46 @@ public class weapon : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetButtonDown("Fire"+playerNr))
-		{
-			Fire();
+	void FixedUpdate () {
+
+
+
+
+		if (Input.GetButton ("Fire" + playerNr)) {
+			
+			keepFiring = true;
+		} 
+		else {
+			keepFiring = false;
+		}
+
+		if (keepFiring) {
+			Fire ();
 		}
 	}
 
 	void Fire()
 	{
-		//spawn at BulletSpawn location with direction of BulletSpawn(camera)
-		Transform bulletSpawn =this.transform.parent.transform.Find("BulletSpawn").gameObject.transform;
+		float currentTime = Time.time;
+		if (currentTime - reloadTime > lastShot) {
 
-		// Create the Bullet from the Bullet Prefab
-		var bullet = (GameObject)Instantiate(
-			bulletPrefab,
-			bulletSpawn.position,
-			bulletSpawn.rotation);
+			//spawn at BulletSpawn location with direction of BulletSpawn(camera)
+			Transform bulletSpawn = this.transform.parent.transform.Find ("BulletSpawn").gameObject.transform;
 
-		// Add velocity to the bullet
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletspeed;
-		bullet.name="Bullet";
+			// Create the Bullet from the Bullet Prefab
+			var bullet = (GameObject)Instantiate (
+				            bulletPrefab,
+				            bulletSpawn.position,
+				            bulletSpawn.rotation);
 
-		// Destroy the bullet after 20 seconds
-		Destroy(bullet, 20.0f);        
+			// Add velocity to the bullet
+			bullet.GetComponent<Rigidbody> ().velocity = bullet.transform.forward * bulletspeed;
+			bullet.name = "Bullet";
+
+			// Destroy the bullet after 20 seconds
+			Destroy (bullet, 20.0f);        
+		
+			lastShot = currentTime;
+		}
 	}
 }
