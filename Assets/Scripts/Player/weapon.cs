@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class weapon : MonoBehaviour {
 
-	public GameObject bulletPrefab;
+	public GameObject[] bulletPrefab;
 	public float bulletspeed=6f;
 	int playerNr;
 	bool keepFiring=false;
 	float reloadTime=0.100f;
 	float lastShot=0f;
+
+	private GameObject bullet;
 
 	// Use this for initialization
 	void Start () {
@@ -44,10 +46,25 @@ public class weapon : MonoBehaviour {
 			Transform bulletSpawn = this.transform.parent.transform.Find ("BulletSpawn").gameObject.transform;
 
 			// Create the Bullet from the Bullet Prefab
-			var bullet = (GameObject)Instantiate (
-				            bulletPrefab,
-				            bulletSpawn.position,
-				            bulletSpawn.rotation);
+			switch(transform.parent.transform.parent.transform.GetSiblingIndex()){
+				case 0:
+					bullet = (GameObject)Instantiate(bulletPrefab[0], bulletSpawn.position, bulletSpawn.rotation);
+					break;
+				case 1:
+					bullet = (GameObject)Instantiate(bulletPrefab[1], bulletSpawn.position, bulletSpawn.rotation);
+					break;
+				case 2: 
+					bullet = (GameObject)Instantiate(bulletPrefab[2], bulletSpawn.position, bulletSpawn.rotation);
+					break;
+				case 3:
+					bullet = (GameObject)Instantiate(bulletPrefab[3], bulletSpawn.position, bulletSpawn.rotation);
+					break;
+			}
+
+			Physics.IgnoreCollision(transform.parent.transform.parent.transform.gameObject.GetComponent<Collider>(), bullet.GetComponent<Collider>());
+			// Add velocity to the bullet
+			bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletspeed;
+			bullet.name="Bullet";
 
 			// Add velocity to the bullet
 			bullet.GetComponent<Rigidbody> ().velocity = bullet.transform.forward * bulletspeed;
