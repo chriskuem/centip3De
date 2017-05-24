@@ -32,6 +32,7 @@ public class weapon : MonoBehaviour {
 			bulletSpawn.position,
 			bulletSpawn.rotation);
 
+		Physics.IgnoreCollision(transform.parent.transform.parent.transform.gameObject.GetComponent<Collider>(), bullet.GetComponent<Collider>());
 		// Add velocity to the bullet
 		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletspeed;
 		bullet.name="Bullet";
