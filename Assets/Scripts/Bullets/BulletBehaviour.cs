@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour {
 
+	private Vector3 curLocation = new Vector3(0,0,0);
 	// Use this for initialization
 	void Start () {
-		//transform.parent=transform.parent.transform.Find("_Temp").gameObject.transform;
 	}
 	
 	// Update is called once per frame
@@ -16,6 +16,6 @@ public class BulletBehaviour : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-			Object.Destroy(this.gameObject);
+		Object.Destroy(this.gameObject);
 	}
 }
