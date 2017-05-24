@@ -21,7 +21,6 @@ public class CentipedeMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		playfieldSize = playfieldSize / 2;
-		currentHeight = transform.position.y;
 		partNr=999;
 
 
@@ -30,7 +29,8 @@ public class CentipedeMovement : MonoBehaviour {
 	}
 
 	void IndexChanged(int newIndex){
-		
+		currentHeight = transform.position.y;
+
 		//change mesh for head
 		if (newIndex == 0) {
 			var headObject=Instantiate(head,transform.position,(transform.rotation * head.transform.localRotation));
@@ -60,7 +60,7 @@ public class CentipedeMovement : MonoBehaviour {
 		if (partNr == 0) {
 			//Ebene tiefer
 			if (transform.position.y > currentHeight) {
-				target = new Vector3 (transform.position.x, currentHeight-0.5f, transform.position.z);
+				target = new Vector3 (transform.position.x, currentHeight, transform.position.z);
 				direction = 0;
 			} else if(direction==0) {
 				//4 random directions
@@ -174,7 +174,7 @@ public class CentipedeMovement : MonoBehaviour {
 	}
 
 	void MoveDown(){
-		if (currentHeight > 3) {
+		if (currentHeight > 0) {
 			if (transform.position.y <= currentHeight) {
 				currentHeight--;
 			}
