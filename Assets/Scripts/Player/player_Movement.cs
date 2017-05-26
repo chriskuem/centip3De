@@ -89,7 +89,7 @@ public class player_Movement : MonoBehaviour {
 
 		//jump----------------
 		if (Input.GetButtonDown ("Jump"+playerNr)&&transform.position.y<1){
-			this.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpheight * Time.deltaTime, 0);
+			this.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpheight * 0.035f, 0);
 			        } 
 		//----------------------
 
@@ -100,7 +100,8 @@ public class player_Movement : MonoBehaviour {
 
 		//loose
 		if (Gameplay.GameOver) {
-			Object.Destroy (this.gameObject);
+			//Object.Destroy (this.gameObject);
+			Gameplay.lvl=1;
 		}
 	}
 

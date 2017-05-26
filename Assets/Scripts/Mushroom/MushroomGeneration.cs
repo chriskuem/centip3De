@@ -6,6 +6,7 @@ public class MushroomGeneration : MonoBehaviour {
 
 	// insert Mushroom Asset
 	public Transform mushroom;
+	public static Transform mushroomPublic;
 	// value between 1-100
 	public int spawnPercentage;
 	// dimensons of the Spawn Matrix
@@ -18,6 +19,7 @@ public class MushroomGeneration : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(generateShrooms(spawnTime));
+		mushroomPublic = mushroom;
 	}
 	
 	// Update is called once per frame

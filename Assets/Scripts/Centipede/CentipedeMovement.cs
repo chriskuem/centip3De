@@ -17,6 +17,8 @@ public class CentipedeMovement : MonoBehaviour {
 	public Transform head;
 	public Transform body;
 
+	//spotlight on ground
+	GameObject lightGameObject;
 
 	// Use this for initialization
 	void Start () {
@@ -42,6 +44,20 @@ public class CentipedeMovement : MonoBehaviour {
 				Object.Destroy (transform.GetChild(0).gameObject);
 			}
 
+			// Create spotlight
+			lightGameObject = new GameObject("Spotlight");
+			Light lightSpot = lightGameObject.AddComponent<Light>();
+			//lightSpot.color = Color.blue;
+			lightSpot.type = LightType.Spot;
+			//lightSpot.range = 300;
+			lightSpot.spotAngle = 10;
+			lightSpot.intensity = 4;
+			lightSpot.shadows = LightShadows.Soft;
+
+			lightGameObject.transform.parent=gameObject.transform;
+
+
+
 		} else {
 			//ignore collisions within centipede
 			Physics.IgnoreCollision(transform.parent.transform.GetChild(partNr-1).gameObject.GetComponent<Collider>(), GetComponent<Collider>());
@@ -59,10 +75,16 @@ public class CentipedeMovement : MonoBehaviour {
 
 		//head
 		if (partNr == 0) {
+
+
+
+
+
 			//Ebene tiefer
 			if (transform.position.y > currentHeight) {
 				target = new Vector3 (transform.position.x, currentHeight, transform.position.z);
 				direction = 0;
+
 			} else if(direction==0) {
 				//4 random directions
 				System.Random random = new System.Random();
@@ -116,6 +138,12 @@ public class CentipedeMovement : MonoBehaviour {
 				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (dir), Time.deltaTime * speed);
 				transform.position += transform.forward * Time.deltaTime * speed;
 
+			//update spotlight
+			lightGameObject.transform.position = new Vector3(30, 5, 30);
+			var dirToCent = transform.position-lightGameObject.transform.position;
+			lightGameObject.transform.rotation = Quaternion.LookRotation(dirToCent);
+
+
 		}
 
 		//non-head
@@ -161,10 +189,12 @@ public class CentipedeMovement : MonoBehaviour {
 					}
 
 					//loose part on bullet enter
+					Instantiate(MushroomGeneration.mushroomPublic, this.gameObject.transform.position, Quaternion.identity);	
 					Object.Destroy (this.gameObject);
 				} 
 				//head
 				else {
+					Instantiate(MushroomGeneration.mushroomPublic, transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject.transform.position, Quaternion.identity);	
 					Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject);
 				}
 			} else {

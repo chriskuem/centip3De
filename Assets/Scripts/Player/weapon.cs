@@ -42,6 +42,10 @@ public class weapon : MonoBehaviour {
 		float currentTime = Time.time;
 		if (currentTime - reloadTime > lastShot) {
 
+			//audio
+			AudioSource audio = GetComponent<AudioSource>();
+			audio.Play ();
+
 			//spawn at BulletSpawn location with direction of BulletSpawn(camera)
 			Transform bulletSpawn = this.transform.parent.transform.Find ("BulletSpawn").gameObject.transform;
 
