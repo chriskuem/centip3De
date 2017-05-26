@@ -7,14 +7,32 @@ public class spawnPlayer : MonoBehaviour {
 
 	public GameObject PlayerPrefab;
 	public int playerCount=1;
+	public bool PlayerOneUsesKeyboard = true;
 
 	// Use this for initialization
 	void Start () {
+
+		//read startparameter------------------------------
+		string[] args = Environment.GetCommandLineArgs();
+		foreach(string argument in args){
+
+		int number;
+		bool result = Int32.TryParse(argument, out number);
+			if (result) {
+				if (number != 0 && number <= 4) {
+					playerCount = number;
+				}
+			}
+		}
+		//--------------------------------------------------
+
+		Gameplay.playerOneUsesKeyboard = PlayerOneUsesKeyboard;
 
 		//Limit to 4 players
 		if(playerCount>4){
 			playerCount=4;
 		}
+		Gameplay.playersCount = playerCount;
 
 		//Create all players
 		for (int i = 0; i < playerCount; i++) {

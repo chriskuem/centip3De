@@ -26,7 +26,7 @@ public class CentipedeSpawnParts : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-
+	void FixedUpdate () {
+		//dont use, doesnt influence newly created cents
 	}
 }

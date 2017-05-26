@@ -30,6 +30,10 @@ public class player_Movement : MonoBehaviour {
 	void Start () {
 		playerNr=transform.GetSiblingIndex()+1;
 
+		if (Gameplay.playerOneUsesKeyboard) {
+			playerNr--;
+		}
+
 		//Lock Mouse in Window
 		Cursor.lockState = CursorLockMode.Locked;
 
@@ -98,11 +102,7 @@ public class player_Movement : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 
 
-		//loose
-		if (Gameplay.GameOver) {
-			//Object.Destroy (this.gameObject);
-			Gameplay.lvl=1;
-		}
+
 	}
 
 

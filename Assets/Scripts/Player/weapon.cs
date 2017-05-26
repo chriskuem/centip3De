@@ -16,6 +16,9 @@ public class weapon : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		playerNr=this.transform.parent.transform.parent.transform.GetSiblingIndex()+1;
+		if (Gameplay.playerOneUsesKeyboard) {
+			playerNr--;
+		}
 	}
 	
 	// Update is called once per frame

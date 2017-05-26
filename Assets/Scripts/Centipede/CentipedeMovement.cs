@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CentipedeMovement : MonoBehaviour {
 
@@ -22,7 +23,7 @@ public class CentipedeMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		speed = speed + Gameplay.lvl-1;
+		speed = speed + (Gameplay.lvl-1f)/3;
 		playfieldSize = playfieldSize / 2;
 		partNr=999;
 
@@ -41,7 +42,7 @@ public class CentipedeMovement : MonoBehaviour {
 
 			//remove old prefab
 			if (transform.childCount > 0) {
-				Object.Destroy (transform.GetChild(0).gameObject);
+				UnityEngine.Object.Destroy (transform.GetChild(0).gameObject);
 			}
 
 			// Create spotlight
@@ -66,6 +67,12 @@ public class CentipedeMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		//self destruction if lifes gone
+		if (Gameplay.lives < 1) {
+			Instantiate(MushroomGeneration.mushroomPublic, this.gameObject.transform.position, Quaternion.identity);
+			UnityEngine.Object.Destroy (this.gameObject);
+		}
+
 
 		//index of part in centipede
 		if(partNr!=transform.GetSiblingIndex()){
@@ -173,6 +180,11 @@ public class CentipedeMovement : MonoBehaviour {
 			if (collision.collider.name == "Bullet") {
 				//normal body parts
 				if (partNr != 0) {
+
+					Gameplay.score++;
+					Gameplay.score++;
+					Gameplay.score++;
+
 					//if not last
 					if (transform.GetSiblingIndex () + 1 != transform.parent.childCount) {
 						//create new centipede container
@@ -190,12 +202,18 @@ public class CentipedeMovement : MonoBehaviour {
 
 					//loose part on bullet enter
 					Instantiate(MushroomGeneration.mushroomPublic, this.gameObject.transform.position, Quaternion.identity);	
-					Object.Destroy (this.gameObject);
+					UnityEngine.Object.Destroy (this.gameObject);
 				} 
 				//head
 				else {
+					Gameplay.score++;
+					Gameplay.score++;
+					Gameplay.score++;
+					Gameplay.score++;
+					Gameplay.score++;
+
 					Instantiate(MushroomGeneration.mushroomPublic, transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject.transform.position, Quaternion.identity);	
-					Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject);
+					UnityEngine.Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject);
 				}
 			} else {
 				//move down on collision with mushroom
@@ -205,12 +223,17 @@ public class CentipedeMovement : MonoBehaviour {
 	}
 
 	void MoveDown(){
-		if (currentHeight > 2) {
-			if (transform.position.y <= currentHeight) {
-				currentHeight--;
+		if (partNr == 0) {
+			if (currentHeight > 2) {
+				if (transform.position.y <= currentHeight) {
+					currentHeight--;
+				}
+			} else {
+				//centipede reaches ground
+				UnityEngine.Object.Destroy (this.gameObject);
+				Gameplay.lives--;
+
 			}
-		} else {
-			Gameplay.GameOver = true;
 		}
 	}
 }

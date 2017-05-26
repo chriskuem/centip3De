@@ -13,7 +13,9 @@ public class FlashlightToggle : MonoBehaviour {
 	void Start () {
 		light = gameObject.GetComponent<Light>();
 		playerNr=transform.parent.transform.parent.transform.GetSiblingIndex()+1;
-		
+		if (Gameplay.playerOneUsesKeyboard) {
+			playerNr--;
+		}
 	}
 	
 	// Update is called once per frame

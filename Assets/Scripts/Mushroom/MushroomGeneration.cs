@@ -23,7 +23,7 @@ public class MushroomGeneration : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 	}
 
 	private IEnumerator generateShrooms(float spawnTime){
