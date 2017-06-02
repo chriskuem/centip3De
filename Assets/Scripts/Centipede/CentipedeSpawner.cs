@@ -8,6 +8,16 @@ public class CentipedeSpawner : MonoBehaviour {
 	public int centipedeCount=1;
 	public float playfieldHeight = 100f;
 
+	//CentipedeSpawnParts Parameters
+	public GameObject CentipedePartPrefab;
+	public int centipedePartCount=10;
+
+	//CentipedeMovement Parameters
+	public float speed = 1f;
+	public float playfieldSize=50f;
+	public Transform head;
+	public Transform body;
+
 	int lastTimeAlive=99;
 
 	// Use this for initialization

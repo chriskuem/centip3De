@@ -35,7 +35,7 @@ public class MushroomCollision : MonoBehaviour {
 			}
 			if (hitCount == 2) {
 				trans = Instantiate (leftovers, initVec, Quaternion.identity);
-				Destroy (trans.gameObject, 100f);
+				Destroy (trans.gameObject, 10f);
 				Destroy (gameObject);
 				Gameplay.score++;
 			}

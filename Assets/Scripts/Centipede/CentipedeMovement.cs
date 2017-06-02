@@ -9,8 +9,8 @@ public class CentipedeMovement : MonoBehaviour {
 	float currentHeight;
 	Vector3 target=new Vector3(0f,0f,0f);
 
-	public float speed = 1f;
-	public float playfieldSize=50f;
+	public float speed;
+	public float playfieldSize;
 
 	int direction=0;
 	int directionBefore=0;
@@ -23,6 +23,15 @@ public class CentipedeMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		//get params from parent-------------------------------------
+		//CentipedeMovement Parameters
+		speed=this.transform.parent.GetComponent<CentipedeSpawnParts>().speed;
+		playfieldSize=this.transform.parent.GetComponent<CentipedeSpawnParts>().playfieldSize;
+		head=this.transform.parent.GetComponent<CentipedeSpawnParts>().head;
+		body=this.transform.parent.GetComponent<CentipedeSpawnParts>().body;
+		//-------------------------------------------------------------------
+
 		speed = speed + (Gameplay.lvl-1f)/3;
 		playfieldSize = playfieldSize / 2;
 		partNr=999;
@@ -46,9 +55,9 @@ public class CentipedeMovement : MonoBehaviour {
 			}
 
 			// Create spotlight
+			/*
 			lightGameObject = new GameObject("Spotlight");
 			Light lightSpot = lightGameObject.AddComponent<Light>();
-			//lightSpot.color = Color.blue;
 			lightSpot.type = LightType.Spot;
 			//lightSpot.range = 300;
 			lightSpot.spotAngle = 10;
@@ -56,6 +65,7 @@ public class CentipedeMovement : MonoBehaviour {
 			lightSpot.shadows = LightShadows.Soft;
 
 			lightGameObject.transform.parent=gameObject.transform;
+			*/
 
 
 
@@ -67,6 +77,13 @@ public class CentipedeMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+		if(this.transform.position.y<=-2) {
+			//centipede reaches ground
+			UnityEngine.Object.Destroy (this.gameObject);
+		}
+
+
 		//self destruction if lifes gone
 		if (Gameplay.lives < 1) {
 			Instantiate(MushroomGeneration.mushroomPublic, this.gameObject.transform.position, Quaternion.identity);
@@ -146,9 +163,10 @@ public class CentipedeMovement : MonoBehaviour {
 				transform.position += transform.forward * Time.deltaTime * speed;
 
 			//update spotlight
-			lightGameObject.transform.position = new Vector3(30, 5, 30);
+			/*lightGameObject.transform.position = new Vector3(30, 5, 30);
 			var dirToCent = transform.position-lightGameObject.transform.position;
 			lightGameObject.transform.rotation = Quaternion.LookRotation(dirToCent);
+			*/
 
 
 		}
@@ -176,64 +194,70 @@ public class CentipedeMovement : MonoBehaviour {
 		//disable self collision
 		if (collision.collider.gameObject.transform.parent != transform.parent) {
 
-			//bullet hit
-			if (collision.collider.name == "Bullet") {
-				//normal body parts
-				if (partNr != 0) {
+			//touching ground--> loose life
+			if (collision.collider.name == "Ground") {
+				Gameplay.lives--;
+				currentHeight = -15;
+			} else {
 
-					Gameplay.score++;
-					Gameplay.score++;
-					Gameplay.score++;
 
-					//if not last
-					if (transform.GetSiblingIndex () + 1 != transform.parent.childCount) {
-						//create new centipede container
-						GameObject centipede = new GameObject ();
-						centipede.name = "Centipede-" + partNr;
-						centipede.transform.parent = transform.parent.transform.parent.transform;
+				//bullet hit
+				if (collision.collider.name == "Bullet") {
+					//normal body parts
+					if (partNr != 0) {
 
-						//put parts into new centipede
-						int timesIt = transform.parent.childCount;
-						for (int i = partNr + 1; i < timesIt; i++) {
-							//immer part+1 da sich index des Childs durch verschieben des vorherigen ändert
-							transform.parent.transform.GetChild (partNr + 1).gameObject.transform.parent = centipede.transform;
+						Gameplay.score++;
+						Gameplay.score++;
+						Gameplay.score++;
+
+						//if not last
+						if (transform.GetSiblingIndex () + 1 != transform.parent.childCount) {
+							//create new centipede container
+							GameObject centipede = new GameObject ();
+							centipede.name = "Centipede-" + partNr;
+							centipede.transform.parent = transform.parent.transform.parent.transform;
+
+							//put parts into new centipede
+							int timesIt = transform.parent.childCount;
+							for (int i = partNr + 1; i < timesIt; i++) {
+								//immer part+1 da sich index des Childs durch verschieben des vorherigen ändert
+								transform.parent.transform.GetChild (partNr + 1).gameObject.transform.parent = centipede.transform;
+							}
 						}
-					}
 
-					//loose part on bullet enter
-					Instantiate(MushroomGeneration.mushroomPublic, this.gameObject.transform.position, Quaternion.identity);	
-					UnityEngine.Object.Destroy (this.gameObject);
-				} 
+						//loose part on bullet enter
+						Instantiate (MushroomGeneration.mushroomPublic, this.gameObject.transform.position, Quaternion.identity);	
+						UnityEngine.Object.Destroy (this.gameObject);
+					} 
 				//head
 				else {
-					Gameplay.score++;
-					Gameplay.score++;
-					Gameplay.score++;
-					Gameplay.score++;
-					Gameplay.score++;
+						Gameplay.score++;
+						Gameplay.score++;
+						Gameplay.score++;
+						Gameplay.score++;
+						Gameplay.score++;
 
-					Instantiate(MushroomGeneration.mushroomPublic, transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject.transform.position, Quaternion.identity);	
-					UnityEngine.Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject);
+						Instantiate (MushroomGeneration.mushroomPublic, transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject.transform.position, Quaternion.identity);	
+						UnityEngine.Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject);
+					}
+				} else {
+					//move down on collision with mushroom
+					MoveDown ();
 				}
-			} else {
-				//move down on collision with mushroom
-				MoveDown();
 			}
 		}
 	}
 
 	void MoveDown(){
 		if (partNr == 0) {
-			if (currentHeight > 2) {
+			if (currentHeight > -10) {
 				if (transform.position.y <= currentHeight) {
 					currentHeight--;
 				}
-			} else {
-				//centipede reaches ground
-				UnityEngine.Object.Destroy (this.gameObject);
-				Gameplay.lives--;
-
-			}
+				if (currentHeight < 3) {
+					currentHeight = -15;
+				}
+			} 
 		}
 	}
 }
