@@ -30,6 +30,10 @@ public class player_Movement : MonoBehaviour {
 	void Start () {
 		playerNr=transform.GetSiblingIndex()+1;
 
+		if (Gameplay.playerOneUsesKeyboard) {
+			playerNr--;
+		}
+
 		//Lock Mouse in Window
 		Cursor.lockState = CursorLockMode.Locked;
 
@@ -45,8 +49,8 @@ public class player_Movement : MonoBehaviour {
 	void Update () {
 
 		//movement-------------------------
-		if(Input.GetKeyDown(KeyCode.LeftShift))speed=speed*3;
-		if(Input.GetKeyUp(KeyCode.LeftShift))speed=speed/3;
+		if(Input.GetButtonDown("Sprint"+playerNr))speed=speed*3;
+		if(Input.GetButtonUp("Sprint"+playerNr))speed=speed/3;
 		float translation = Input.GetAxis ("Vertical"+playerNr) * speed;
 		float straffe = Input.GetAxis ("Horizontal"+playerNr) * speed;
 		translation *= Time.deltaTime;
@@ -89,7 +93,7 @@ public class player_Movement : MonoBehaviour {
 
 		//jump----------------
 		if (Input.GetButtonDown ("Jump"+playerNr)&&transform.position.y<1){
-			this.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpheight * Time.deltaTime, 0);
+			this.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpheight * 0.035f, 0);
 			        } 
 		//----------------------
 
@@ -97,7 +101,10 @@ public class player_Movement : MonoBehaviour {
 		if (Input.GetKeyDown ("escape"))
 			Cursor.lockState = CursorLockMode.None;
 
+
+
 	}
+
 
 
 }

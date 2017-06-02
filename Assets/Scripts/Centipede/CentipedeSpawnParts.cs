@@ -11,7 +11,7 @@ public class CentipedeSpawnParts : MonoBehaviour {
 	void Start () {
 
 		//Create all centipedes
-		for (int i = 0; i < centipedePartCount; i++) {
+		for (int i = 0; i < centipedePartCount+Gameplay.lvl-1; i++) {
 
 			// Create the centipedes from the centipede Prefab
 			var centipedePart = (GameObject)Instantiate(
@@ -26,7 +26,7 @@ public class CentipedeSpawnParts : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-
+	void FixedUpdate () {
+		//dont use, doesnt influence newly created cents
 	}
 }

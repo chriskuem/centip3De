@@ -7,14 +7,32 @@ public class spawnPlayer : MonoBehaviour {
 
 	public GameObject PlayerPrefab;
 	public int playerCount=1;
+	public bool PlayerOneUsesKeyboard = true;
 
 	// Use this for initialization
 	void Start () {
 
+		//read startparameter------------------------------
+		string[] args = Environment.GetCommandLineArgs();
+		foreach(string argument in args){
+
+		int number;
+		bool result = Int32.TryParse(argument, out number);
+			if (result) {
+				if (number != 0 && number <= 4) {
+					playerCount = number;
+				}
+			}
+		}
+		//--------------------------------------------------
+
+		Gameplay.playerOneUsesKeyboard = PlayerOneUsesKeyboard;
+
 		//Limit to 4 players
 		if(playerCount>4){
-			//playerCount=4;
+			playerCount=4;
 		}
+		Gameplay.playersCount = playerCount;
 
 		//Create all players
 		for (int i = 0; i < playerCount; i++) {
@@ -49,6 +67,11 @@ public class spawnPlayer : MonoBehaviour {
 
 
 				cam.rect = new Rect (xpos, ypos, width, height);
+
+				//place minimap into center
+				if (playerCount == 4) {
+					transform.parent.Find ("MapCam").gameObject.GetComponent<Camera> ().rect = new Rect (0.445f, 0.4f, 0.11f, 0.2f);
+				}
 
 			} else {
 				cam.rect = new Rect ((1f/playerCount)*i, 0, (1f/playerCount), 1);
