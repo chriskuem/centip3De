@@ -8,6 +8,7 @@ public class spawnPlayer : MonoBehaviour {
 	public GameObject PlayerPrefab;
 	public int playerCount=1;
 	public bool PlayerOneUsesKeyboard = true;
+	public Texture2D crosshairImage;
 
 	// Use this for initialization
 	void Start () {
@@ -85,5 +86,38 @@ public class spawnPlayer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	void OnGUI(){
+		float xMin;
+		float yMin;
+		switch (playerCount){
+			case 1:
+				xMin = (Screen.width / 2) - (crosshairImage.width / 2);
+				yMin = (Screen.height / 2) - (crosshairImage.height / 2);
+				GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
+				break;
+			case 2:
+				xMin = ((Screen.width / 2) - (crosshairImage.width / 2)) /2;
+				yMin = (Screen.height / 2) - (crosshairImage.height / 2);
+				GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width/2, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
+				GUI.DrawTexture(new Rect((Screen.width/2)+xMin, yMin, crosshairImage.width/2, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
+				break;
+			case 3:
+				xMin = ((Screen.width / 2) - (crosshairImage.width / 2)) / 2;
+				yMin = ((Screen.height / 2) - (crosshairImage.height / 2)) / 2;
+				GUI.DrawTexture(new Rect(xMin*2, yMin, crosshairImage.width, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
+				GUI.DrawTexture(new Rect(xMin,(Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
+				GUI.DrawTexture(new Rect((Screen.width/2)+xMin,(Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
+				break;
+			case 4:
+				xMin = ((Screen.width / 2) - (crosshairImage.width / 2)) / 2;
+				yMin = ((Screen.height / 2) - (crosshairImage.height / 2)) / 2;
+				GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
+				GUI.DrawTexture(new Rect(xMin, (Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
+				GUI.DrawTexture(new Rect((Screen.width/2)+xMin, yMin, crosshairImage.width/2, crosshairImage.height /2), crosshairImage, ScaleMode.ScaleToFit);
+				GUI.DrawTexture(new Rect((Screen.width/2)+xMin, (Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
+				break;
+		}
 	}
 }
