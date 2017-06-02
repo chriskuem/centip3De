@@ -95,17 +95,24 @@ public class spawnPlayer : MonoBehaviour {
 			case 1:
 				xMin = (Screen.width / 2) - (crosshairImage.width / 2);
 				yMin = (Screen.height / 2) - (crosshairImage.height / 2);
+				GUI.TextField(new Rect(Screen.width-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
 				GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
 				break;
 			case 2:
 				xMin = ((Screen.width / 2) - (crosshairImage.width / 2)) /2;
 				yMin = (Screen.height / 2) - (crosshairImage.height / 2);
+				GUI.TextField(new Rect((Screen.width/2)-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
+				GUI.TextField(new Rect(Screen.width-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
 				GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width/2, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
 				GUI.DrawTexture(new Rect((Screen.width/2)+xMin, yMin, crosshairImage.width/2, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
 				break;
 			case 3:
 				xMin = ((Screen.width / 2) - (crosshairImage.width / 2)) / 2;
 				yMin = ((Screen.height / 2) - (crosshairImage.height / 2)) / 2;
+				GUI.TextField()
+				GUI.TextField(new Rect(Screen.width-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
+				GUI.TextField(new Rect((Screen.width/2)-160, (Screen.height/2), 160, 20),"HighScore: " + Gameplay.score.ToString());
+				GUI.TextField(new Rect(Screen.width-160, (Screen.height/2), 160, 20),"HighScore: " + Gameplay.score.ToString());
 				GUI.DrawTexture(new Rect(xMin*2, yMin, crosshairImage.width, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
 				GUI.DrawTexture(new Rect(xMin,(Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
 				GUI.DrawTexture(new Rect((Screen.width/2)+xMin,(Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
@@ -113,6 +120,11 @@ public class spawnPlayer : MonoBehaviour {
 			case 4:
 				xMin = ((Screen.width / 2) - (crosshairImage.width / 2)) / 2;
 				yMin = ((Screen.height / 2) - (crosshairImage.height / 2)) / 2;
+				GUI.TextField(new Rect((Screen.width/2)-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
+				GUI.TextField(new Rect(Screen.width-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());		
+				GUI.TextField(new Rect((Screen.width/2)-160, (Screen.height/2), 160, 20),"HighScore: " + Gameplay.score.ToString());
+				GUI.TextField(new Rect(Screen.width-160, (Screen.height/2), 160, 20),"HighScore: " + Gameplay.score.ToString());
+				
 				GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
 				GUI.DrawTexture(new Rect(xMin, (Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
 				GUI.DrawTexture(new Rect((Screen.width/2)+xMin, yMin, crosshairImage.width/2, crosshairImage.height /2), crosshairImage, ScaleMode.ScaleToFit);

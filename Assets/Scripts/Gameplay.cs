@@ -17,7 +17,7 @@ public class Gameplay : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		highscore=PlayerPrefs.GetInt("highscore");
+		highscore=PlayerPrefs.GetInt("highscore_" + playersCount);
 	}
 
 	// Update is called once per frame
@@ -32,7 +32,7 @@ public class Gameplay : MonoBehaviour {
 				//highscore
 				if (Convert.ToInt32 (score) > highscore) {
 					highscore = Convert.ToInt32 (score);
-					PlayerPrefs.SetInt("highscore",highscore);
+					PlayerPrefs.SetInt("highscore_" + playersCount,highscore);
 					}
 
 				score = 0;
