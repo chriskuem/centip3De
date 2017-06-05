@@ -23,7 +23,8 @@ public class Day_Light_Circle : MonoBehaviour {
 		if (light < 0.5f) {
 			direction = true;
 		}
-		if (light > 1.3f) {
+		//Feature vorerst wieder herausgenommen (ansonsten z.B. 1.3f)
+		if (light > 0.5f) {
 			direction = false;
 		}
 
