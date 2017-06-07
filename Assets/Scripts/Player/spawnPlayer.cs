@@ -9,9 +9,16 @@ public class spawnPlayer : MonoBehaviour {
 	public int playerCount=1;
 	public bool PlayerOneUsesKeyboard = true;
 	public Texture2D crosshairImage;
+	public Font font;
+
+	private GUIStyle GUIStyle = new GUIStyle();
 
 	// Use this for initialization
 	void Start () {
+		
+		//setup GUIStyle for HighScore 
+		GUIStyle.font = font;
+		GUIStyle.normal.textColor = Color.white;		
 
 		//read startparameter------------------------------
 		string[] args = Environment.GetCommandLineArgs();
@@ -39,10 +46,7 @@ public class spawnPlayer : MonoBehaviour {
 		for (int i = 0; i < playerCount; i++) {
 		
 			// Create the player from the player Prefab
-		var player = (GameObject)Instantiate(
-			PlayerPrefab,
-			new Vector3(0f+(i*2f),3f,0f),
-			transform.rotation);
+		var player = (GameObject)Instantiate(PlayerPrefab,new Vector3(0f+(i*2f),3f,0f),transform.rotation);
 
 			player.transform.parent=gameObject.transform;
 
@@ -95,24 +99,23 @@ public class spawnPlayer : MonoBehaviour {
 			case 1:
 				xMin = (Screen.width / 2) - (crosshairImage.width / 2);
 				yMin = (Screen.height / 2) - (crosshairImage.height / 2);
-				GUI.TextField(new Rect(Screen.width-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
+				GUI.Label(new Rect(Screen.width-180, 0, 180, 20),"HighScore:  \n" + Gameplay.scores[0].ToString(), GUIStyle);
 				GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
 				break;
 			case 2:
 				xMin = ((Screen.width / 2) - (crosshairImage.width / 2)) /2;
 				yMin = (Screen.height / 2) - (crosshairImage.height / 2);
-				GUI.TextField(new Rect((Screen.width/2)-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
-				GUI.TextField(new Rect(Screen.width-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
+				GUI.Label(new Rect((Screen.width/2)-180, 0, 180, 20),"HighScore:  \n" + Gameplay.scores[0].ToString(), GUIStyle);
+				GUI.Label(new Rect(Screen.width-180, 0, 180, 20),"HighScore:  \n" + Gameplay.scores[1].ToString(), GUIStyle);
 				GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width/2, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
 				GUI.DrawTexture(new Rect((Screen.width/2)+xMin, yMin, crosshairImage.width/2, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
 				break;
 			case 3:
 				xMin = ((Screen.width / 2) - (crosshairImage.width / 2)) / 2;
 				yMin = ((Screen.height / 2) - (crosshairImage.height / 2)) / 2;
-				GUI.TextField()
-				GUI.TextField(new Rect(Screen.width-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
-				GUI.TextField(new Rect((Screen.width/2)-160, (Screen.height/2), 160, 20),"HighScore: " + Gameplay.score.ToString());
-				GUI.TextField(new Rect(Screen.width-160, (Screen.height/2), 160, 20),"HighScore: " + Gameplay.score.ToString());
+				GUI.Label(new Rect(Screen.width-180, 0, 180, 20),"HighScore:  \n" + Gameplay.scores[0].ToString(), GUIStyle);
+				GUI.Label(new Rect(0, (Screen.height/2), 180, 20),"HighScore:  \n" + Gameplay.scores[1].ToString(), GUIStyle);
+				GUI.Label(new Rect(Screen.width-180, (Screen.height/2), 180, 20),"HighScore:  \n" + Gameplay.scores[2].ToString(), GUIStyle);
 				GUI.DrawTexture(new Rect(xMin*2, yMin, crosshairImage.width, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
 				GUI.DrawTexture(new Rect(xMin,(Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
 				GUI.DrawTexture(new Rect((Screen.width/2)+xMin,(Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
@@ -120,10 +123,10 @@ public class spawnPlayer : MonoBehaviour {
 			case 4:
 				xMin = ((Screen.width / 2) - (crosshairImage.width / 2)) / 2;
 				yMin = ((Screen.height / 2) - (crosshairImage.height / 2)) / 2;
-				GUI.TextField(new Rect((Screen.width/2)-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());
-				GUI.TextField(new Rect(Screen.width-160, 0, 160, 20),"HighScore: " + Gameplay.score.ToString());		
-				GUI.TextField(new Rect((Screen.width/2)-160, (Screen.height/2), 160, 20),"HighScore: " + Gameplay.score.ToString());
-				GUI.TextField(new Rect(Screen.width-160, (Screen.height/2), 160, 20),"HighScore: " + Gameplay.score.ToString());
+				GUI.Label(new Rect(0, 0, 180, 20),"HighScore:  \n" + Gameplay.scores[0].ToString(), GUIStyle);
+				GUI.Label(new Rect(Screen.width-180, 0, 180, 20),"HighScore:  \n" + Gameplay.scores[1].ToString(), GUIStyle);		
+				GUI.Label(new Rect(0, (Screen.height/2), 180, 20),"HighScore:  \n" + Gameplay.scores[2].ToString(), GUIStyle);
+				GUI.Label(new Rect(Screen.width-180, (Screen.height/2), 180, 20),"HighScore:  \n" + Gameplay.scores[3].ToString(), GUIStyle);
 				
 				GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);
 				GUI.DrawTexture(new Rect(xMin, (Screen.height/2)+yMin, crosshairImage.width/2, crosshairImage.height/2), crosshairImage, ScaleMode.ScaleToFit);

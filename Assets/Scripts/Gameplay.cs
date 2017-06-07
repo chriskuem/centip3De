@@ -7,11 +7,12 @@ public class Gameplay : MonoBehaviour {
 
 	public static int lvl=1;
 	public static int lives=8;
-	public static float score=0;
+	public static float[] scores = {0,0,0,0};
 	public static int roundTimer=500;
 	public static int centsAlive=99;
 	public static bool RoundOver = true;
 	public static int highscore;
+	public static float combinedScore;
 	public static int playersCount;
 	public static bool playerOneUsesKeyboard;
 
@@ -29,13 +30,15 @@ public class Gameplay : MonoBehaviour {
 			//game over
 			if (lives < 1) {
 
-				//highscore
-				if (Convert.ToInt32 (score) > highscore) {
-					highscore = Convert.ToInt32 (score);
-					PlayerPrefs.SetInt("highscore_" + playersCount,highscore);
-					}
-
-				score = 0;
+				//highscore				
+				if (combinedScore > highscore) {
+					highscore = Convert.ToInt32(combinedScore);
+					PlayerPrefs.SetInt("highscore_" + playersCount, highscore);
+				}
+				
+				for(int i = 0; i < scores.Length; i++){
+					scores[i] = 0;
+				}
 				lives = 8;
 				lvl = 1;
 			}
@@ -47,12 +50,13 @@ public class Gameplay : MonoBehaviour {
 			}
 			if (roundTimer == 0) {
 				RoundOver = false;
-
-
 			}
 		} else {
 			//score
-			score=score+0.008f;
+			for(int i = 0; i < scores.Length; i++){
+					scores[i] += 0.008f;
+			}
+			combinedScore = scores[0] + scores[1] + scores[2] + scores[3];
 		}
 		}
 	}

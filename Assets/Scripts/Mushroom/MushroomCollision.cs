@@ -22,7 +22,7 @@ public class MushroomCollision : MonoBehaviour {
 	
 	// Update is called once per frame
 	void OnCollisionEnter (Collision col) {
-		if (col.collider.name == "Bullet") {
+		if (col.collider.name == "Bullet_0" || col.collider.name == "Bullet_1" ||col.collider.name == "Bullet_2" || col.collider.name == "Bullet_3") {
 			if (hitCount == 0) {
 				Destroy (gameObject.transform.GetChild (0).transform.gameObject, 0.1f);
 				trans = Instantiate (mushroomMiddle, initVec, Quaternion.Euler (270, 0, 0));
@@ -37,7 +37,11 @@ public class MushroomCollision : MonoBehaviour {
 				trans = Instantiate (leftovers, initVec, Quaternion.identity);
 				Destroy (trans.gameObject, 100f);
 				Destroy (gameObject);
-				Gameplay.score++;
+
+				if (col.collider.name == "Bullet_0")Gameplay.scores[0]++;
+				if (col.collider.name == "Bullet_1")Gameplay.scores[1]++;
+				if (col.collider.name == "Bullet_2")Gameplay.scores[2]++;
+				if (col.collider.name == "Bullet_3")Gameplay.scores[3]++;
 			}
 			hitCount++;
 		}

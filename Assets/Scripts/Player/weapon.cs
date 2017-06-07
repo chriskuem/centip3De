@@ -56,26 +56,25 @@ public class weapon : MonoBehaviour {
 			switch(transform.parent.transform.parent.transform.GetSiblingIndex()){
 				case 0:
 					bullet = (GameObject)Instantiate(bulletPrefab[0], bulletSpawn.position, bulletSpawn.rotation);
+					bullet.name = "Bullet_0";
 					break;
 				case 1:
 					bullet = (GameObject)Instantiate(bulletPrefab[1], bulletSpawn.position, bulletSpawn.rotation);
+					bullet.name = "Bullet_1";
 					break;
 				case 2: 
 					bullet = (GameObject)Instantiate(bulletPrefab[2], bulletSpawn.position, bulletSpawn.rotation);
+					bullet.name = "Bullet_2";
 					break;
 				case 3:
 					bullet = (GameObject)Instantiate(bulletPrefab[3], bulletSpawn.position, bulletSpawn.rotation);
+					bullet.name = "Bullet_3";
 					break;
 			}
 
 			Physics.IgnoreCollision(transform.parent.transform.parent.transform.gameObject.GetComponent<Collider>(), bullet.GetComponent<Collider>());
 			// Add velocity to the bullet
 			bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletspeed;
-			bullet.name="Bullet";
-
-			// Add velocity to the bullet
-			bullet.GetComponent<Rigidbody> ().velocity = bullet.transform.forward * bulletspeed;
-			bullet.name = "Bullet";
 
 			// Destroy the bullet after 20 seconds
 			Destroy (bullet, 20.0f);        

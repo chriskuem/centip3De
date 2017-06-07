@@ -21,10 +21,7 @@ public class player_Movement : MonoBehaviour {
 	//camera zoom
 	bool zoom = false;
 
-	//Fadenkreuz
-	//public Texture2D Fadenkreuz;
-	//Rect Fposition;
-	//bool FadenkreuzAn;
+	private Camera FPScam;
 
 	// Use this for initialization
 	void Start () {
@@ -36,13 +33,6 @@ public class player_Movement : MonoBehaviour {
 
 		//Lock Mouse in Window
 		Cursor.lockState = CursorLockMode.Locked;
-
-		//Crosshair
-		//Fposition = new Rect((Screen.width - Fadenkreuz.width) / 2, (Screen.height - Fadenkreuz.height) /2, Fadenkreuz.width, Fadenkreuz.height);
-		//if(FadenkreuzAn == true)
-		//{
-		//	GUI.DrawTexture(Fposition, Fadenkreuz);
-		//}
 	}
 	
 	// Update is called once per frame
@@ -77,7 +67,7 @@ public class player_Movement : MonoBehaviour {
 
 
 		//zoom---------------------------------
-		Camera FPScam=cam.transform.Find("FPSCamera").gameObject.transform.GetComponent<Camera> ();
+		FPScam=cam.transform.Find("FPSCamera").gameObject.transform.GetComponent<Camera> ();
 		if (Input.GetButtonDown ("Zoom" + playerNr)) {
 			zoom = !zoom;
 		} 
@@ -97,14 +87,14 @@ public class player_Movement : MonoBehaviour {
 			        } 
 		//----------------------
 
-		//unlock mouse
-		if (Input.GetKeyDown ("escape"))
-			Cursor.lockState = CursorLockMode.None;
-
-
+		if (Input.GetKeyDown ("escape")){	
+			// if (FPScam.enabled == true){
+			// 	FPScam.enabled = false;
+			// } else {
+			// 	FPScam.enabled = true;
+			// }
+		    //Cursor.lockState = CursorLockMode.None;
+		}
 
 	}
-
-
-
 }

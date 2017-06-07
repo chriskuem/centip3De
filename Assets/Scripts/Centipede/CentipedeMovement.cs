@@ -177,13 +177,14 @@ public class CentipedeMovement : MonoBehaviour {
 		if (collision.collider.gameObject.transform.parent != transform.parent) {
 
 			//bullet hit
-			if (collision.collider.name == "Bullet") {
+			if (collision.collider.name == "Bullet_0" || collision.collider.name == "Bullet_1" ||collision.collider.name == "Bullet_2" || collision.collider.name == "Bullet_3") {
 				//normal body parts
 				if (partNr != 0) {
 
-					Gameplay.score++;
-					Gameplay.score++;
-					Gameplay.score++;
+					if (collision.collider.name == "Bullet_0")Gameplay.scores[0] +=3;
+					if (collision.collider.name == "Bullet_1")Gameplay.scores[1] +=3;
+					if (collision.collider.name == "Bullet_2")Gameplay.scores[2] +=3;
+					if (collision.collider.name == "Bullet_3")Gameplay.scores[3] +=3;
 
 					//if not last
 					if (transform.GetSiblingIndex () + 1 != transform.parent.childCount) {
@@ -205,12 +206,11 @@ public class CentipedeMovement : MonoBehaviour {
 					UnityEngine.Object.Destroy (this.gameObject);
 				} 
 				//head
-				else {
-					Gameplay.score++;
-					Gameplay.score++;
-					Gameplay.score++;
-					Gameplay.score++;
-					Gameplay.score++;
+				else {					
+					if (collision.collider.name == "Bullet_0")Gameplay.scores[0] +=5;
+					if (collision.collider.name == "Bullet_1")Gameplay.scores[1] +=5;
+					if (collision.collider.name == "Bullet_2")Gameplay.scores[2] +=5;
+					if (collision.collider.name == "Bullet_3")Gameplay.scores[3] +=5;
 
 					Instantiate(MushroomGeneration.mushroomPublic, transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject.transform.position, Quaternion.identity);	
 					UnityEngine.Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject);
