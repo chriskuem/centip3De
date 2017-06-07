@@ -73,10 +73,6 @@ public class spawnPlayer : MonoBehaviour {
 
 				cam.rect = new Rect (xpos, ypos, width, height);
 
-				//place minimap into center
-				if (playerCount == 4) {
-					transform.parent.Find ("MapCam").gameObject.GetComponent<Camera> ().rect = new Rect (0.445f, 0.4f, 0.11f, 0.2f);
-				}
 
 			} else {
 				cam.rect = new Rect ((1f/playerCount)*i, 0, (1f/playerCount), 1);
