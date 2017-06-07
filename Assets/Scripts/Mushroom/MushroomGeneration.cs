@@ -31,7 +31,8 @@ public class MushroomGeneration : MonoBehaviour {
         	for (int x = 0; x < matrixDimensons.x; x++) {
 				for(int z = 0; z < matrixDimensons.z; z++){    
 					if((Random.value*100) <= spawnPercentage) {
-						Instantiate(mushroom, (new Vector3(x,y,z) + matrixOffset), Quaternion.identity);	
+						var mush = Instantiate(mushroom, (new Vector3(x,y,z) + matrixOffset), Quaternion.identity);	
+						mush.transform.parent = TempContainer.tempCont.transform;
 					}
 				}
         	}

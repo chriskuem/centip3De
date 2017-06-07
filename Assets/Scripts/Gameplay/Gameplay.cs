@@ -53,7 +53,7 @@ public class Gameplay : MonoBehaviour {
 			}
 		} else {
 			//score
-			for(int i = 0; i < scores.Length; i++){
+			for(int i = 0; i < playersCount; i++){
 					scores[i] += 0.008f;
 			}
 			combinedScore = scores[0] + scores[1] + scores[2] + scores[3];

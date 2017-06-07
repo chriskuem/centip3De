@@ -75,6 +75,7 @@ public class weapon : MonoBehaviour {
 			Physics.IgnoreCollision(transform.parent.transform.parent.transform.gameObject.GetComponent<Collider>(), bullet.GetComponent<Collider>());
 			// Add velocity to the bullet
 			bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletspeed;
+			bullet.transform.parent = TempContainer.tempCont.transform;
 
 			// Destroy the bullet after 20 seconds
 			Destroy (bullet, 20.0f);        

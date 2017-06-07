@@ -25,13 +25,12 @@ public class PauseMenu : MonoBehaviour {
         {
             canvas.gameObject.SetActive(true);
             Time.timeScale = 0;
-            //Player.GetComponent<FirstPersonController>().enabled = false;
         }
         else
-        {
+		{
+			Cursor.lockState = CursorLockMode.Locked;
             canvas.gameObject.SetActive(false);
-            Time.timeScale = 1;
-            //Player.GetComponent<FirstPersonController>().enabled = true;
+			Time.timeScale = 1;
         }
     }
 }

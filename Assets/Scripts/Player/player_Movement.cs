@@ -87,14 +87,11 @@ public class player_Movement : MonoBehaviour {
 			        } 
 		//----------------------
 
-		if (Input.GetKeyDown ("escape")){	
-			// if (FPScam.enabled == true){
-			// 	FPScam.enabled = false;
-			// } else {
-			// 	FPScam.enabled = true;
-			// }
-		    //Cursor.lockState = CursorLockMode.None;
+		if (Time.timeScale == 0) {
+			sensitivity = 0;
+		} else if (sensitivity != 5) {
+			sensitivity = 5;
+			Cursor.lockState = CursorLockMode.Locked;
 		}
-
 	}
 }
