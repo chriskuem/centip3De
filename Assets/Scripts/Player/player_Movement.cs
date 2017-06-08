@@ -12,7 +12,7 @@ public class player_Movement : MonoBehaviour {
 	//Mouse look around
 	Vector2 mouseLook;
 	Vector2 smoothV;
-	public float sensitivity=5;
+	public float sensitivity=5f;
 	public float smoothing=2;
 
 	//name of container with moving parts
@@ -73,9 +73,11 @@ public class player_Movement : MonoBehaviour {
 		} 
 		if(zoom){
 			FPScam.fieldOfView = Mathf.Lerp(FPScam.fieldOfView,20f,Time.deltaTime*5f);
+			sensitivity = 1f;
 		}
 		else{
 			FPScam.fieldOfView = Mathf.Lerp(FPScam.fieldOfView,60f,Time.deltaTime*5f);
+			sensitivity = 5f;
 		}
 		//-----------------------------------
 
@@ -88,9 +90,9 @@ public class player_Movement : MonoBehaviour {
 		//----------------------
 
 		if (Time.timeScale == 0) {
-			sensitivity = 0;
-		} else if (sensitivity != 5) {
-			sensitivity = 5;
+			sensitivity = 0f;
+		} else if (sensitivity == 0f) {
+			sensitivity = 5f;
 			Cursor.lockState = CursorLockMode.Locked;
 		}
 	}

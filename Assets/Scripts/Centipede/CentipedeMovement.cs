@@ -26,10 +26,12 @@ public class CentipedeMovement : MonoBehaviour {
 
 		//get params from parent-------------------------------------
 		//CentipedeMovement Parameters
+		if(this.transform.parent.GetComponent<CentipedeSpawnParts>()!=null){
 		speed=this.transform.parent.GetComponent<CentipedeSpawnParts>().speed;
 		playfieldSize=this.transform.parent.GetComponent<CentipedeSpawnParts>().playfieldSize;
 		head=this.transform.parent.GetComponent<CentipedeSpawnParts>().head;
 		body=this.transform.parent.GetComponent<CentipedeSpawnParts>().body;
+		}
 		//-------------------------------------------------------------------
 
 		speed = speed + (Gameplay.lvl-1f)/3;

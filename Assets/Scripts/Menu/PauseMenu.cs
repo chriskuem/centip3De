@@ -23,6 +23,7 @@ public class PauseMenu : MonoBehaviour {
     {
         if (canvas.gameObject.activeInHierarchy == false)
         {
+			Cursor.lockState = CursorLockMode.None;
             canvas.gameObject.SetActive(true);
             Time.timeScale = 0;
         }
