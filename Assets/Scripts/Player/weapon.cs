@@ -23,10 +23,6 @@ public class weapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-
-
-
-
 		if (Input.GetButton ("Fire" + playerNr)) {
 			
 			keepFiring = true;
@@ -46,8 +42,7 @@ public class weapon : MonoBehaviour {
 		if (currentTime - reloadTime > lastShot) {
 
 			//audio
-			AudioSource audio = GetComponent<AudioSource>();
-			audio.Play ();
+			BulletSoundObject.audio.Play();
 
 			//spawn at BulletSpawn location with direction of BulletSpawn(camera)
 			Transform bulletSpawn = this.transform.parent.transform.Find ("BulletSpawn").gameObject.transform;

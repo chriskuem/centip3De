@@ -5,8 +5,8 @@ using UnityEngine;
 public class MushroomGeneration : MonoBehaviour {
 
 	// insert Mushroom Asset
-	public Transform mushroom;
-	public static Transform mushroomPublic;
+	public GameObject mushroom;
+	public static GameObject mushroomPublic;
 	// value between 1-100
 	public int spawnPercentage;
 	// dimensons of the Spawn Matrix
@@ -15,6 +15,9 @@ public class MushroomGeneration : MonoBehaviour {
 	public Vector3 matrixOffset;
 	// spawntime for Shrooms
 	public float spawnTime;
+
+
+	private GameObject mush;
 
 	// Use this for initialization
 	void Start () {
@@ -31,8 +34,8 @@ public class MushroomGeneration : MonoBehaviour {
         	for (int x = 0; x < matrixDimensons.x; x++) {
 				for(int z = 0; z < matrixDimensons.z; z++){    
 					if((Random.value*100) <= spawnPercentage) {
-						var mush = Instantiate(mushroom, (new Vector3(x,y,z) + matrixOffset), Quaternion.identity);	
-						mush.transform.parent = TempContainer.tempCont.transform;
+						mush = (GameObject)Instantiate(mushroom, (new Vector3(x,y,z) + matrixOffset), Quaternion.identity);	
+						//mush.transform.parent = TempContainer.tempCont.transform;
 					}
 				}
         	}
