@@ -15,6 +15,8 @@ public class BulletBehaviour : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-		Object.Destroy(this.gameObject);
+		if (collision.collider.name != "Bullet_0" && collision.collider.name != "Bullet_1" && collision.collider.name != "Bullet_2" && collision.collider.name != "Bullet_3") {
+			Object.Destroy (this.gameObject);
+		}
 	}
 }

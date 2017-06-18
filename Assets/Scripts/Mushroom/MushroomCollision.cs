@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MushroomCollision : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class MushroomCollision : MonoBehaviour {
 	public Transform mushroomMiddle;
 	public Transform mushroomLow;
 	public Transform leftovers;
+	public Transform powerup;
 
 	private int hitCount = 0;
 	private Transform trans;
@@ -42,6 +44,17 @@ public class MushroomCollision : MonoBehaviour {
 				if (col.collider.name == "Bullet_1")Gameplay.scores[1]++;
 				if (col.collider.name == "Bullet_2")Gameplay.scores[2]++;
 				if (col.collider.name == "Bullet_3")Gameplay.scores[3]++;
+
+				//spawn powerup in 2% of cases
+				System.Random rnd = new System.Random();
+				int percentage = rnd.Next(1, 101);
+
+				if (percentage <= 2) {
+					var powUp = Instantiate (powerup, initVec, Quaternion.identity);
+					powUp.transform.parent = TempContainer.tempCont.transform;
+					Destroy (powUp.gameObject, 60.0f);   
+				}
+
 			}
 			hitCount++;
 		}

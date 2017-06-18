@@ -48,6 +48,7 @@ public class spawnPlayer : MonoBehaviour {
 			// Create the player from the player Prefab
 		var player = (GameObject)Instantiate(PlayerPrefab,new Vector3(0f+(i*2f),3f,0f),transform.rotation);
 
+			player.name = "Player_" + (i.ToString ());
 			player.transform.parent=gameObject.transform;
 
 			//Setup cameras
