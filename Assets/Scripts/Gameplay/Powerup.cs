@@ -34,7 +34,7 @@ public class Powerup : MonoBehaviour {
 			usedTransform = puDubstep;
 		}
 
-		var powerUpObject = Instantiate (usedTransform, transform.position, (transform.rotation * usedTransform.transform.localRotation));
+		var powerUpObject = Instantiate (usedTransform, transform.position + usedTransform.position, (transform.rotation * usedTransform.transform.localRotation));
 		powerUpObject.transform.parent=gameObject.transform;
 	}
 	
