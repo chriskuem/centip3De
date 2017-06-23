@@ -6,10 +6,10 @@ using System;
 public class weapon : MonoBehaviour {
 
 	public GameObject[] bulletPrefab;
-	public float bulletspeed=6f;
+	public float bulletspeed=50f;
 	int playerNr;
 	bool keepFiring=false;
-	public float reloadTime=0.100f;
+	public float reloadTime=0.200f;
 	float lastShot=0f;
 
 	public int powerUpTimeLeft=0;
@@ -43,8 +43,8 @@ public class weapon : MonoBehaviour {
 		if (keepFiring) {
 			bool ShotFired = Fire (PowerUp == 3,!(PowerUp == 3),false);
 			if ((PowerUp == 2 || PowerUp == 3)&&ShotFired) {
-				Fire (PowerUp == 3,false,true);
-				Fire (PowerUp == 3,false,true);
+				Fire (PowerUp == 3,!(PowerUp == 3),true);
+				Fire (PowerUp == 3,!(PowerUp == 3),true);
 			}
 		}
 
@@ -52,8 +52,9 @@ public class weapon : MonoBehaviour {
 			powerUpTimeLeft--;
 		}
 		else{
-			reloadTime = 0.100f;
-			bulletspeed = 6f;
+			reloadTime = 0.200f;
+			bulletspeed = 50f;
+			Time.timeScale = 1f;
 		}
 
 	
@@ -133,8 +134,8 @@ public class weapon : MonoBehaviour {
 			bullet.transform.parent = TempContainer.tempCont.transform;
 
 			// Destroy the bullet after 20 seconds
-			Destroy (bullet, 20.0f);        
-		
+			Destroy (bullet, 20.0f);     
+
 			lastShot = currentTime;
 
 			return true;

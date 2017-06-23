@@ -5,9 +5,11 @@ using System;
 
 public class Powerup : MonoBehaviour {
 
-	public Transform puSniper;
+	public Transform puSlow;
 	public Transform pu3Shots;
 	public Transform puDubstep;
+
+	public GameObject disco;
 
 	public int typeInt = 0;
 	string type;
@@ -24,8 +26,8 @@ public class Powerup : MonoBehaviour {
 
 		Transform usedTransform;
 		if (typeInt == 1) {
-			type = "Sniper";
-			usedTransform = puSniper;
+			type = "Slow";
+			usedTransform = puSlow;
 		} else if (typeInt == 2) {
 			type = "Dreifachschuss";
 			usedTransform = pu3Shots;
@@ -52,24 +54,29 @@ public class Powerup : MonoBehaviour {
 				col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().powerUpactive = typeInt;
 				col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().powerUpTimeLeft = 1000;
 
-				if (type == "Sniper") {
-					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().reloadTime = 0.400f;
-					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().bulletspeed = 50f;
+				if (type == "Slow") {
+					Time.timeScale = 0.5f;
 				}
 				else if (type == "Dreifachschuss") {
 					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().reloadTime = 0.200f;
-					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().bulletspeed = 5f;
+					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().bulletspeed = 50f;
 				}
 				else if (type == "Dubstep Canon") {
-					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().reloadTime = 0.100f;
-					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().bulletspeed = 6f;
+					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().reloadTime = 0.050f;
+					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().bulletspeed = 20f;
 					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().powerUpTimeLeft = 500;
 
+
+					GameObject discoTransform = (GameObject)Instantiate (disco, disco.transform.position, disco.transform.rotation);
+					Destroy (discoTransform, 10.0f);    
+
+					MusicVolume.PauseMusicFor (10.0f);
+
+					DubstepSoundObject.audio.volume = PlayerPrefs.GetFloat("music_vol")*2f;
 					DubstepSoundObject.audio.Play ();
 				}
 
-				AudioSource audio = this.transform.gameObject.GetComponent<AudioSource>();
-				audio.Play();
+				PickupSoundObject.audio.Play();
 
 			}
 

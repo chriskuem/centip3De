@@ -85,6 +85,7 @@ public class player_Movement : MonoBehaviour {
 
 		//jump----------------
 		if (Input.GetButtonDown ("Jump"+playerNr)&&transform.position.y<1){
+			JumpSoundObject.audio.Play ();
 			this.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpheight * 0.035f, 0);
 			        } 
 		//----------------------

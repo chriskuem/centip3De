@@ -9,7 +9,11 @@ public class MusicVolume : MonoBehaviour {
 	public Slider musicSlider;
 	public Slider sfxSlider;
 	public AudioSource musicAudio;
-	public AudioSource bulletSound;
+	public AudioSource[] sfxSound;
+
+	static float currentTime;
+	static float playAtTime;
+	static bool isPause=false;
 
 	public void Start()
     {
@@ -19,12 +23,27 @@ public class MusicVolume : MonoBehaviour {
 
 		AudioListener.volume = masterSlider.normalizedValue;
 		musicAudio.volume = musicSlider.normalizedValue;
-		bulletSound.volume = sfxSlider.normalizedValue;
+
+		foreach (AudioSource audiosource in sfxSound) {
+			audiosource.volume = sfxSlider.normalizedValue;
+		}
 
         masterSlider.onValueChanged.AddListener(delegate {MasterValueChangeCheck(); });
         musicSlider.onValueChanged.AddListener(delegate {MusicValueChangeCheck(); });
         sfxSlider.onValueChanged.AddListener(delegate {SFXValueChangeCheck(); });
     }
+
+	public void FixedUpdate(){
+		currentTime = Time.time;
+
+		if (isPause) {
+			if(musicAudio.isPlaying)musicAudio.Pause ();
+			if (currentTime > playAtTime) {
+				musicAudio.Play ();
+				isPause = !isPause;
+			}
+		}
+	}
 
     // Invoked when the value of the slider changes.
     public void MasterValueChangeCheck()
@@ -39,7 +58,14 @@ public class MusicVolume : MonoBehaviour {
     }
 	public void SFXValueChangeCheck()
     {
-		bulletSound.volume = sfxSlider.normalizedValue;
+		foreach (AudioSource audiosource in sfxSound) {
+			audiosource.volume = sfxSlider.normalizedValue;
+		}
 		PlayerPrefs.SetFloat("sfx_vol", sfxSlider.normalizedValue);
     }
+
+	public static void PauseMusicFor(float seconds){
+		playAtTime = currentTime + seconds;
+		isPause = true;
+	}
 }
