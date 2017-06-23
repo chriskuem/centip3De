@@ -38,6 +38,8 @@ public class CentipedeSpawner : MonoBehaviour {
 				//Create all centipedes
 				for (int i = 0; i < centipedeCount*Gameplay.playersCount; i++) {
 
+					CentipedeSpawnSoundObject.audio.Play();
+
 					// Create the centipedes from the centipede Prefab
 					var centipede = (GameObject)Instantiate (
 						               CentipedePrefab,

@@ -44,6 +44,8 @@ public class MushroomCollision : MonoBehaviour {
 				if (col.collider.name == "Bullet_2")Gameplay.scores[2]++;
 				if (col.collider.name == "Bullet_3")Gameplay.scores[3]++;
 
+				MushroomDestroySoundObject.audio.Play();
+
 				//spawn powerup in 5% of cases
 				if ((Random.value*100) <= 3) {
 					var powUp = Instantiate (powerup, initVec, Quaternion.identity);

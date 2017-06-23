@@ -223,6 +223,7 @@ public class CentipedeMovement : MonoBehaviour {
 
 						//loose part on bullet enter
 						Instantiate (MushroomGeneration.mushroomPublic, this.gameObject.transform.position, Quaternion.identity);	
+						CentipedeHitSoundObject.audio.Play();
 						UnityEngine.Object.Destroy (this.gameObject);
 					}					
 					//head
@@ -233,6 +234,7 @@ public class CentipedeMovement : MonoBehaviour {
 						if (collision.collider.name == "Bullet_3")Gameplay.scores[3] +=5;
 
 						Instantiate(MushroomGeneration.mushroomPublic, transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject.transform.position, Quaternion.identity);	
+						CentipedeHitSoundObject.audio.Play();
 						UnityEngine.Object.Destroy (transform.parent.transform.GetChild (transform.parent.childCount - 1).gameObject);
 					}
 				} else {
