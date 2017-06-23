@@ -45,11 +45,11 @@ public class MushroomCollision : MonoBehaviour {
 				if (col.collider.name == "Bullet_2")Gameplay.scores[2]++;
 				if (col.collider.name == "Bullet_3")Gameplay.scores[3]++;
 
-				//spawn powerup in 2% of cases
+				//spawn powerup in 5% of cases
 				System.Random rnd = new System.Random();
 				int percentage = rnd.Next(1, 101);
 
-				if (percentage <= 2) {
+				if (percentage <= 5) {
 					var powUp = Instantiate (powerup, initVec, Quaternion.identity);
 					powUp.transform.parent = TempContainer.tempCont.transform;
 					Destroy (powUp.gameObject, 60.0f);   
