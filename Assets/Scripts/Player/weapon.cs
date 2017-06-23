@@ -50,11 +50,13 @@ public class weapon : MonoBehaviour {
 
 		if (PowerUp > 0) {
 			powerUpTimeLeft--;
+			if (powerUpTimeLeft == 0) {
+				Time.timeScale = 1f;
+			}
 		}
-		else{
+		else {
 			reloadTime = 0.200f;
 			bulletspeed = 50f;
-			Time.timeScale = 1f;
 		}
 
 	

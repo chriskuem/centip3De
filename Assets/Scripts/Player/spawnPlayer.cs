@@ -88,11 +88,11 @@ public class spawnPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		 if (Input.GetKeyDown(KeyCode.Escape))
-        {
-             if (!menuEnabled) menuEnabled = true;
-			 else menuEnabled = false;
-        }
+		if (Time.timeScale == 0f) {
+			menuEnabled = true;
+		} else {
+			menuEnabled = false;
+		}
 	}
 
 	void OnGUI(){

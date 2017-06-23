@@ -59,8 +59,9 @@ public class Gameplay : MonoBehaviour {
 				//lvl = 1;
 
 				Cursor.lockState = CursorLockMode.None;
-				canvas.gameObject.SetActive(true);
 				Time.timeScale = 0;
+				canvas.gameObject.SetActive(true);
+
 			}
 
 			if (roundTimer == 0) {

@@ -15,7 +15,7 @@ public class GameInfoScreen : MonoBehaviour {
 	void FixedUpdate () {
 		Text screenText = GetComponent<Text>();
 		if (Gameplay.roundTimer == 0) {
-			screenText.text = "Lvl:" + (Gameplay.lvl - 1)+Environment.NewLine + "Lifes:" + Gameplay.lives+Environment.NewLine+"Score:" + Convert.ToInt32(Gameplay.combinedScore)+/*"("+Gameplay.highscore+")"+*/Environment.NewLine + "Left:" + Gameplay.centsAlive;
+			screenText.text = "Lvl:" + (Gameplay.lvl - 1)+Environment.NewLine + "Lifes:" + Gameplay.lives+Environment.NewLine+"Score:" + Convert.ToInt32(Gameplay.combinedScore);
 		} else {
 			screenText.text = "Lvl "+Gameplay.lvl+" in "+(Gameplay.roundTimer/50).ToString();
 		}

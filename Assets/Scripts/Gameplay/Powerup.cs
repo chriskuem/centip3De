@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class Powerup : MonoBehaviour {
 
@@ -16,12 +15,18 @@ public class Powerup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 		//wenn kein Typ vordefiniert
 		if (typeInt == 0) {
 			//random type
-			System.Random rnd = new System.Random ();
-			typeInt = rnd.Next (1, 4);
+			int percentage = System.Convert.ToInt32(Random.value*100) + 1;
+
+			if (percentage < 40) {
+				typeInt = 1;
+			} else if (percentage >= 40 && percentage < 90) {
+				typeInt = 2;
+			} else {
+				typeInt = 3;
+			}
 		}
 
 		Transform usedTransform;
@@ -56,6 +61,7 @@ public class Powerup : MonoBehaviour {
 
 				if (type == "Slow") {
 					Time.timeScale = 0.5f;
+					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().powerUpTimeLeft = 300;
 				}
 				else if (type == "Dreifachschuss") {
 					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().reloadTime = 0.200f;
