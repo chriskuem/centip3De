@@ -112,7 +112,7 @@ public class spawnPlayer : MonoBehaviour {
 					yMin = (Screen.height / 2) - (crosshairImage.height / 2);
 					//GUI.DrawTexture(new Rect(0, 0, Screen.width / 2, Screen.height),hudImage, ScaleMode.StretchToFill);
 					//GUI.DrawTexture(new Rect(Screen.width/2, 0, Screen.width / 2, Screen.height),hudImage, ScaleMode.StretchToFill);
-					GUI.Label(new Rect((Screen.width/2)-180, 0, 180, 20),"HighScore:  \n" + Gameplay.scores[0].ToString(), GUIStyle);
+					GUI.Label(new Rect(0, 0, 180, 20),"HighScore:  \n" + Gameplay.scores[0].ToString(), GUIStyle);
 					GUI.Label(new Rect(Screen.width-180, 0, 180, 20),"HighScore:  \n" + Gameplay.scores[1].ToString(), GUIStyle);
 					GUI.DrawTexture(new Rect(xMin, yMin, crosshairImage.width/2, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);
 					GUI.DrawTexture(new Rect((Screen.width/2)+xMin, yMin, crosshairImage.width/2, crosshairImage.height), crosshairImage, ScaleMode.ScaleToFit);

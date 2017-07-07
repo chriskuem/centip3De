@@ -30,9 +30,13 @@ public class Minimap : MonoBehaviour {
 
 		//place minimap into center if 4 players
 		count=Gameplay.playersCount;
-		if (count == 4) {
+		if (count > 2 ) {
 			cam.rect = new Rect (0.5f-(widthCam/2f), 0.5f - (heightCam/2), widthCam, heightCam);
-		} else {
+		} 
+		else if(count == 2){
+			cam.rect = new Rect (0.5f-(widthCam/2f), 0f, widthCam, heightCam);
+		}
+		else {
 			cam.rect = new Rect (0f, 1f - heightCam, widthCam, heightCam);
 		}
 	}

@@ -78,7 +78,7 @@ public class Powerup : MonoBehaviour {
 
 					MusicVolume.PauseMusicFor (10.0f);
 
-					DubstepSoundObject.audio.volume = PlayerPrefs.GetFloat("music_vol")*2f;
+					DubstepSoundObject.audio.volume = PlayerPrefs.GetFloat("music_vol");
 					DubstepSoundObject.audio.Play ();
 				}
 
