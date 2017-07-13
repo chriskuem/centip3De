@@ -70,13 +70,13 @@ public class Powerup : MonoBehaviour {
 				else if (type == "Dubstep Canon") {
 					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().reloadTime = 0.050f;
 					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().bulletspeed = 20f;
-					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().powerUpTimeLeft = 500;
+					col.collider.transform.Find ("MovingParts").transform.Find ("Weapon").transform.GetComponent<weapon> ().powerUpTimeLeft = 750;
 
 
 					GameObject discoTransform = (GameObject)Instantiate (disco, disco.transform.position, disco.transform.rotation);
-					Destroy (discoTransform, 10.0f);    
+					Destroy (discoTransform, 15.0f);    
 
-					MusicVolume.PauseMusicFor (10.0f);
+					MusicVolume.PauseMusicFor (15.0f);
 
 					DubstepSoundObject.audio.volume = PlayerPrefs.GetFloat("music_vol");
 					DubstepSoundObject.audio.Play ();
